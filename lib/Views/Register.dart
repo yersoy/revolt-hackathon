@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
@@ -19,23 +19,10 @@ class _RegisterState extends State<Register> {
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
 
-  DateTime selectedDate = DateTime.now();
-  TextEditingController datecontroller = TextEditingController();
-  String presentText;
 
-  void _selectDate() async {
-    DateFormat dateFormat = DateFormat("dd / MM / yyyy ");
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-        datecontroller.text = dateFormat.format(picked);
-      });
-  }
+
+
+
 
   bool hidePass = true;
   @override

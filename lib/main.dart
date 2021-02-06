@@ -3,7 +3,7 @@ import 'package:revolt/Views/Dashboard.dart';
 import 'package:revolt/Views/Login.dart';
 import 'package:revolt/Views/Register.dart';
 import 'package:revolt/Views/Splash.dart';
-import 'package:revolt/Views/Wellcome.dart';
+import 'package:revolt/Views/Welcome.dart';
 import 'package:revolt/Views/AuthCase.dart';
 import 'package:revolt/theme.dart';
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.RevoltTheme,
       routes: {
         '/splash': (context) => Splash(),
-        '/wellcome': (context) => Wellcome(),
+        '/welcome': (context) => Welcome(),
         '/dashboard': (context) => Dashboard(),
         '/register': (context) => Register(),
         '/login': (context) => Login(),

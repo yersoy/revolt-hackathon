@@ -41,7 +41,7 @@ class _SplashState extends State<Splash> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             WidgetsBinding.instance.addPostFrameCallback(
-                (_) => Navigator.pushReplacementNamed(context, '/wellcome'));
+                (_) => Navigator.pushReplacementNamed(context, '/welcome'));
           }
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,

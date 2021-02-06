@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+//import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Wellcome extends StatefulWidget {
-  Wellcome({Key key}) : super(key: key);
+class Welcome extends StatefulWidget {
+  Welcome({Key key}) : super(key: key);
 
   @override
-  _WellcomeState createState() => _WellcomeState();
+  _WelcomeState createState() => _WelcomeState();
 }
 
-class _WellcomeState extends State<Wellcome> {
+class _WelcomeState extends State<Welcome> {
   int currentPage = 0;
   Duration kAnimationDuration = Duration(milliseconds: 200);
   List<Map<String, String>> splashData = [
