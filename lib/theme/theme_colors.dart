@@ -9,9 +9,11 @@ class ThemeColor {
   static const Color skyBlue = Color(0xff71b4fb);
   static const Color lightBlue = Color(0xff7fbcfb);
   static const Color extraLightBlue = Color(0xffd9eeff);
+  static const Color accentBlue = Colors.blueAccent;
 
   static const Color orange = Color(0xfffa8c73);
   static const Color lightOrange = Color(0xfffa9881);
+  static const Color accentOrange = Color(0xffff7043);
 
   static const Color purple = Color(0xff8873f4);
   static const Color purpleLight = Color(0xff9489f4);

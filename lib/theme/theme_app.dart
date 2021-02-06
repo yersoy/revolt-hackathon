@@ -3,7 +3,7 @@ import 'package:revolt/theme/theme_colors.dart';
 
 class AppTheme{
   const AppTheme();
-/// THIS CLASS DEFINES THE APP THEME Infos
+/// THIS CLASS DEFINES THE APP THEME Infos and all details for the [ThemeData]
 
   static ThemeData RevoltTheme = ThemeData(
     backgroundColor: ThemeColor.background,

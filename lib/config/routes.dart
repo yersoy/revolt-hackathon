@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revolt/pages/register_page/register_page.dart';
 
 
 /// ___________________My own Importations_______________________
@@ -12,6 +13,7 @@ class Routes{
     return <String, WidgetBuilder>{
       '/':(_) => SplashScreen(),
       '/opening_page':(_) => OpeningPage(),
+      '/register_page':(_)=> RegisterPage(),
     };
 
   }
