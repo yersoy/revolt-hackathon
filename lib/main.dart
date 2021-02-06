@@ -3,6 +3,7 @@ import 'package:revolt/Views/Dashboard.dart';
 import 'package:revolt/Views/Register.dart';
 import 'package:revolt/Views/Splash.dart';
 import 'package:revolt/Views/Wellcome.dart';
+import 'package:revolt/Views/authcase.dart';
 import 'package:revolt/theme.dart';
 
 void main() async {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/wellcome': (context) => Wellcome(),
         '/dashboard': (context) => Dashboard(),
         '/login': (context) => Register(),
+        '/authcase': (context) => AuthCase(),
       },
       initialRoute: "/splash",
     );

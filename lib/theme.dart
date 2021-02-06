@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   const AppTheme();
-
-  /// THIS CLASS DEFINES THE APP THEME Infos and all details for the [ThemeData]
-
   static ThemeData RevoltTheme = ThemeData(
-      backgroundColor: ThemeColor.background,
-      primaryColor: ThemeColor.accentBlue,
-      cardTheme: CardTheme(color: ThemeColor.background),
-      textTheme: TextTheme(headline4: TextStyle(color: ThemeColor.black)),
-      iconTheme: IconThemeData(color: ThemeColor.iconColor),
-      bottomAppBarColor: ThemeColor.background,
-      dividerColor: ThemeColor.background,
-      primaryTextTheme:
-          TextTheme(bodyText2: TextStyle(color: ThemeColor.titleTextColor)));
+    backgroundColor: ThemeColor.background,
+    primaryColor: ThemeColor.accentBlue,
+    cardTheme: CardTheme(color: ThemeColor.background),
+    textTheme: GoogleFonts.poppinsTextTheme(),
+    iconTheme: IconThemeData(color: ThemeColor.iconColor),
+    bottomAppBarColor: ThemeColor.background,
+    dividerColor: ThemeColor.background,
+    primaryTextTheme: TextTheme(
+      bodyText2: TextStyle(color: ThemeColor.titleTextColor),
+    ),
+  );
 
   static EdgeInsets padding =
       const EdgeInsets.symmetric(horizontal: 20, vertical: 10);
@@ -96,95 +96,6 @@ class ThemeColor {
 
   static const Color black = Color(0xff20262C);
   static const Color lightblack = Color(0xff5F5F60);
-}
-
-extension TextStyleHelpers on TextStyle {
-  TextStyle get bold => copyWith(fontWeight: FontWeight.bold);
-  TextStyle get white => copyWith(color: Colors.white);
-  TextStyle get black => copyWith(color: Colors.black);
-  TextStyle get grey => copyWith(color: Colors.grey);
-  TextStyle get subTitleColor => copyWith(color: ThemeColor.subTitleTextColor);
-}
-
-extension PaddingHelper on Widget {
-  Padding get p16 => Padding(padding: EdgeInsets.all(16), child: this);
-
-  /// Set padding according to `value`
-  Padding p(double value) =>
-      Padding(padding: EdgeInsets.all(value), child: this);
-
-  /// Horizontal Padding 16
-  Padding get hPadding4 =>
-      Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: this);
-  Padding get hPadding8 =>
-      Padding(padding: EdgeInsets.symmetric(horizontal: 8), child: this);
-  Padding get hPadding16 =>
-      Padding(padding: EdgeInsets.symmetric(horizontal: 16), child: this);
-
-  /// Vertical Padding 16
-  Padding get vP16 =>
-      Padding(padding: EdgeInsets.symmetric(vertical: 16), child: this);
-  Padding get vP8 =>
-      Padding(padding: EdgeInsets.symmetric(vertical: 8), child: this);
-  Padding get vP4 =>
-      Padding(padding: EdgeInsets.symmetric(vertical: 8), child: this);
-}
-
-extension Extented on Widget {
-  Expanded get extended => Expanded(
-        child: this,
-      );
-}
-
-extension CornerRadius on Widget {
-  ClipRRect get circular => ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(1000)),
-        child: this,
-      );
-}
-
-extension OnPressed on Widget {
-  Widget ripple(Function onPressed,
-          {BorderRadiusGeometry borderRadius =
-              const BorderRadius.all(Radius.circular(5))}) =>
-      Stack(
-        children: <Widget>[
-          this,
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            child: FlatButton(
-                shape: RoundedRectangleBorder(borderRadius: borderRadius),
-                onPressed: () {
-                  if (onPressed != null) {
-                    onPressed();
-                  }
-                },
-                child: Container()),
-          )
-        ],
-      );
-}
-
-extension ExAlignment on Widget {
-  Widget get alignTopCenter => Align(
-        child: this,
-        alignment: Alignment.topCenter,
-      );
-  Widget get alignCenter => Align(
-        child: this,
-        alignment: Alignment.center,
-      );
-  Widget get alignBottomCenter => Align(
-        child: this,
-        alignment: Alignment.bottomCenter,
-      );
-  Widget get alignBottomLeft => Align(
-        child: this,
-        alignment: Alignment.bottomLeft,
-      );
 }
 
 class SizeConfig {

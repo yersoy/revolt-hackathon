@@ -17,6 +17,7 @@ class _RegisterState extends State<Register> {
   TextEditingController _education = TextEditingController();
   TextEditingController _password = TextEditingController();
   TextEditingController _name = TextEditingController();
+  TextEditingController _phone = TextEditingController();
 
   DateTime selectedDate = DateTime.now();
   TextEditingController datecontroller = TextEditingController();
@@ -123,7 +124,6 @@ class _RegisterState extends State<Register> {
                           ),
                         ),
                       ),
-
                       Padding(
                         padding:
                             const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
@@ -151,39 +151,6 @@ class _RegisterState extends State<Register> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding:
-                      //   const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
-                      //   child: Material(
-                      //     borderRadius: BorderRadius.circular(10.0),
-                      //     color: Colors.grey.withOpacity(0.2),
-                      //     elevation: 0.0,
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.only(left: 12.0),
-                      //       child: ListTile(
-                      //         title: TextFormField(
-                      //           controller: _surname,
-                      //           decoration: InputDecoration(
-                      //               hintText: "Soyisim",
-                      //               icon: Icon(Icons.alternate_email),
-                      //               border: InputBorder.none),
-                      //           validator: (value) {
-                      //             if (value.isEmpty) {
-                      //               Pattern pattern =
-                      //                   r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                      //               RegExp regex = new RegExp(pattern);
-                      //               if (!regex.hasMatch(value))
-                      //                 return 'Girdiğiniz eposta hatalıdır';
-                      //               else
-                      //                 return null;
-                      //             }
-                      //           },
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-
                       Padding(
                         padding:
                             const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
@@ -193,17 +160,24 @@ class _RegisterState extends State<Register> {
                           elevation: 0.0,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: GestureDetector(
-                                onTap: () => _selectDate(),
-                                child: AbsorbPointer(
-                                    child: TextFormField(
-                                  controller: datecontroller,
-                                  initialValue: presentText,
-                                ))),
+                            child: ListTile(
+                              title: TextFormField(
+                                controller: _phone,
+                                decoration: InputDecoration(
+                                    hintText: "Telefon Numarası",
+                                    icon: Icon(Icons.phone),
+                                    border: InputBorder.none),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return "Boş olamaz";
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
                           ),
                         ),
                       ),
-
                       Padding(
                         padding:
                             const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
@@ -241,64 +215,27 @@ class _RegisterState extends State<Register> {
                           ),
                         ),
                       ),
-
                       Padding(
                         padding:
-                            const EdgeInsets.fromLTRB(54.0, 8.0, 54.0, 8.0),
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                         child: Material(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: Theme.of(context).primaryColor,
-                            elevation: 0.0,
-                            child: MaterialButton(
-                              onPressed: () async {},
-                              minWidth: MediaQuery.of(context).size.width,
-                              child: Text(
-                                "Oturum Aç",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.0),
-                              ),
-                            )),
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Theme.of(context).primaryColor,
+                          elevation: 0.0,
+                          child: MaterialButton(
+                            onPressed: () async {},
+                            minWidth: MediaQuery.of(context).size.width,
+                            child: Text(
+                              "Oturum Aç",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0),
+                            ),
+                          ),
+                        ),
                       ),
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text(
-                                "Hesabım var",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Theme.of(context).accentColor,
-                                    fontSize: 16),
-                              ))),
-                      //
-                      // Padding(
-                      //   padding: const EdgeInsets.all(16.0),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: <Widget>[
-                      //
-                      //       Padding(
-                      //         padding: const EdgeInsets.all(8.0),
-                      //         child: Text("yada", style: TextStyle(fontSize: 18,color: Colors.grey),),
-                      //       ),
-                      //       Padding(
-                      //         padding:
-                      //         const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
-                      //         child: Material(
-                      //             child: MaterialButton(
-                      //                 onPressed: () async{
-                      //                 },
-                      //                 child: Image.asset("", width: 30,)
-                      //             )),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                     ],
                   )),
             ),
