@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:revolt/Views/Dashboard.dart';
+import 'package:revolt/Views/Register.dart';
+import 'package:revolt/Views/Splash.dart';
+import 'package:revolt/Views/Wellcome.dart';
+import 'package:revolt/theme.dart';
 
-/// ---------- My imports --------------------
-import 'package:revolt/theme/theme_app.dart';
-import 'config/routes.dart';
-
-
-
-void main () async {
+void main() async {
   runApp(MyApp());
 }
-
-
 
 /// This Function is called first
 class MyApp extends StatelessWidget {
@@ -19,9 +16,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Revolt Hackathon",
-      theme:AppTheme.RevoltTheme,
-      routes: Routes.getRoute(),
-      initialRoute: "SplashPage",
+      theme: AppTheme.RevoltTheme,
+      routes: {
+        '/splash': (context) => Splash(),
+        '/wellcome': (context) => Wellcome(),
+        '/dashboard': (context) => Dashboard(),
+        '/login': (context) => Register(),
+      },
+      initialRoute: "/splash",
     );
   }
 }

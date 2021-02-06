@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:revolt/theme/theme_colors.dart';
 
+class Register extends StatefulWidget {
+  Register({Key key}) : super(key: key);
 
-class RegisterPage extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-
+class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
 
@@ -27,15 +26,16 @@ class _RegisterPageState extends State<RegisterPage> {
     DateFormat dateFormat = DateFormat("dd / MM / yyyy ");
     final DateTime picked = await showDatePicker(
         context: context,
-        initialDate:DateTime.now(),
+        initialDate: DateTime.now(),
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
-        datecontroller.text =  dateFormat.format(picked);
+        datecontroller.text = dateFormat.format(picked);
       });
   }
+
   bool hidePass = true;
   @override
   Widget build(BuildContext context) {
@@ -52,8 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey[350],
-                    blurRadius:
-                    20.0, // has the effect of softening the shadow
+                    blurRadius: 20.0, // has the effect of softening the shadow
                   )
                 ],
               ),
@@ -61,7 +60,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   key: _formKey,
                   child: ListView(
                     children: <Widget>[
-
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -73,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       Padding(
                         padding:
-                        const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                         child: Material(
                           borderRadius: BorderRadius.circular(10.0),
                           color: Colors.grey.withOpacity(0.2),
@@ -97,9 +95,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                      ),  Padding(
+                      ),
+                      Padding(
                         padding:
-                        const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                         child: Material(
                           borderRadius: BorderRadius.circular(10.0),
                           color: Colors.grey.withOpacity(0.2),
@@ -127,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                       Padding(
                         padding:
-                        const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                         child: Material(
                           borderRadius: BorderRadius.circular(10.0),
                           color: Colors.grey.withOpacity(0.2),
@@ -185,13 +184,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       //   ),
                       // ),
 
-
-
-
-
                       Padding(
                         padding:
-                        const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                         child: Material(
                           borderRadius: BorderRadius.circular(10.0),
                           color: Colors.grey.withOpacity(0.2),
@@ -202,18 +197,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                 onTap: () => _selectDate(),
                                 child: AbsorbPointer(
                                     child: TextFormField(
-                                      controller: datecontroller,
-                                      initialValue: presentText,
-                                   ))),
+                                  controller: datecontroller,
+                                  initialValue: presentText,
+                                ))),
                           ),
                         ),
                       ),
 
-
-
                       Padding(
                         padding:
-                        const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
                         child: Material(
                           borderRadius: BorderRadius.circular(10.0),
                           color: Colors.grey.withOpacity(0.2),
@@ -251,14 +244,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
                       Padding(
                         padding:
-                        const EdgeInsets.fromLTRB(54.0, 8.0, 54.0, 8.0),
+                            const EdgeInsets.fromLTRB(54.0, 8.0, 54.0, 8.0),
                         child: Material(
                             borderRadius: BorderRadius.circular(20.0),
-                            color: ThemeColor.accentBlue,
+                            color: Theme.of(context).primaryColor,
                             elevation: 0.0,
                             child: MaterialButton(
-                              onPressed: () async{
-                              },
+                              onPressed: () async {},
                               minWidth: MediaQuery.of(context).size.width,
                               child: Text(
                                 "Oturum Aç",
@@ -279,7 +271,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: Text(
                                 "Hesabım var",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(color: ThemeColor.lightOrange, fontSize: 16),
+                                style: TextStyle(
+                                    color: Theme.of(context).accentColor,
+                                    fontSize: 16),
                               ))),
                       //
                       // Padding(

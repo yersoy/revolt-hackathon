@@ -30,7 +30,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   # cupertino_icons: ^1.0.0
 
-
+  font_awesome_flutter: ^8.11.0
   flutter_svg: ^0.19.1
   intl: ^0.16.1
   dio: ^3.0.10
@@ -97,5 +97,5 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icon/icon.png"
+  image_path: "assets/images/logo.png"
   adaptive_icon_background: "#ffffff"
