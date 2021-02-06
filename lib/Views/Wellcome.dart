@@ -107,8 +107,7 @@ class _WellcomeState extends State<Wellcome> {
                           borderRadius: BorderRadius.circular(8)),
                       color: Colors.blueAccent,
                       onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, '/opening_page');
+                        Navigator.pushReplacementNamed(context, '/login');
                       },
                       child: Text(
                         "Devam et",
