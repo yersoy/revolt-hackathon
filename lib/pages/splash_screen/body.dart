@@ -20,7 +20,7 @@ class _BodyState extends State<Body> {
       "image": "assets/svg/teaching_opening.svg"
     },
     {
-      "text": "",
+      "text": " ",
       "image": "assets/svg/world_opening.svg"
     },
     {
