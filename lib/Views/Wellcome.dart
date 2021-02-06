@@ -103,30 +103,18 @@ class _WellcomeState extends State<Wellcome> {
                     ),
                     Spacer(),
                     RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      color: Colors.blueAccent,
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/login');
+                        Navigator.pushReplacementNamed(
+                            context, '/opening_page');
                       },
-                      textColor: Colors.white,
-                      padding: const EdgeInsets.all(0.0),
-                      child: Container(
-                        color: Theme.of(context).primaryColor,
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Devam Et",
-                              style: TextStyle(fontSize: 25),
-                            ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Icon(
-                              FontAwesomeIcons.chevronRight,
-                              size: 20,
-                            )
-                          ],
+                      child: Text(
+                        "Devam et",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
                         ),
                       ),
                     ),
