@@ -85,7 +85,7 @@ class _LoginState extends State<Login> {
                                                 return 'Please make sure your email address is valid';
                                               else
                                                 return null;
-                                            }
+                                              }
                                           },
                                         ),
                                       ),
