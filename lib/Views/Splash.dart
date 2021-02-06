@@ -43,15 +43,19 @@ class _SplashState extends State<Splash> {
             WidgetsBinding.instance.addPostFrameCallback(
                 (_) => Navigator.pushReplacementNamed(context, '/wellcome'));
           }
-          return Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  'assets/images/logo.png',
-                ),
-                fit: BoxFit.cover,
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    alignment: Alignment.topCenter,
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      width: 200.0,
+                    )),
               ),
-            ),
+            ],
           );
         },
       ),
