@@ -68,7 +68,7 @@ extension OnPressed on Widget {
 }
 /// Other values
 /// --------------------------------------------------------------------
-Duration kAnimationDuration = Duration(seconds: 2);
+Duration kAnimationDuration = Duration(milliseconds: 200);
 extension ExAlignment on Widget{
   Widget get alignTopCenter => Align(child: this,alignment: Alignment.topCenter,);
   Widget get alignCenter => Align(child: this,alignment: Alignment.center,);

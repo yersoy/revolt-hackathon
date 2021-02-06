@@ -20,8 +20,7 @@ class _BodyState extends State<Body> {
       "image": "assets/svg/teaching_opening.svg"
     },
     {
-      "text":
-      "",
+      "text": "",
       "image": "assets/svg/world_opening.svg"
     },
     {
@@ -72,7 +71,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Devam et",
                       press: () {
-                     Navigator.pushReplacementNamed(context, '/opening_page');
+                        Navigator.pushReplacementNamed(context, '/opening_page');
                       },
                     ),
                     Spacer(),
