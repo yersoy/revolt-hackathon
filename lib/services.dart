@@ -40,8 +40,8 @@ class Services {
     });
   }
 
-  CollectionReference get(dynamic key) { return _collections.putIfAbsent(key, () => _store.collection(key)); }
+  CollectionReference _get(dynamic key) { return _collections.putIfAbsent(key, () => _store.collection(key)); }
 
-  Repository<Education> educations() { return Repository._(this.get(Keys.EDUCATIONS), revive: (data) => Education.fromJson(data)); }
-  Repository<User> users() { return Repository._(this.get(Keys.USERS), revive: (data) => User.fromJson(data)); }
+  Repository<Education> educations() { return Repository._(this._get(Keys.EDUCATIONS), revive: (data) => Education.fromJson(data)); }
+  Repository<User> users() { return Repository._(this._get(Keys.USERS), revive: (data) => User.fromJson(data)); }
 }
