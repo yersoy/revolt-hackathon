@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 /// ___________________My own Importations_______________________
-import 'package:revolt/config/default_button.dart';
+
 import 'package:revolt/pages/splash_screen/splash_content.dart';
 import 'package:revolt/theme/theme_extention.dart';
 
@@ -68,11 +68,20 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                     Spacer(flex: 2),
-                    DefaultButton(
-                      text: "Devam et",
-                      press: () {
+
+                    RaisedButton(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      color: Colors.blueAccent,
+                      onPressed: (){
                         Navigator.pushReplacementNamed(context, '/opening_page');
                       },
+                      child: Text(
+                        "Devam et",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(15),
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     Spacer(),
                   ],
