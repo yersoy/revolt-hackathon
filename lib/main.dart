@@ -3,7 +3,7 @@ import 'package:revolt/Views/Dashboard.dart';
 import 'package:revolt/Views/Register.dart';
 import 'package:revolt/Views/Splash.dart';
 import 'package:revolt/Views/Wellcome.dart';
-import 'package:revolt/Views/authcase.dart';
+import 'package:revolt/Views/AuthCase.dart';
 import 'package:revolt/theme.dart';
 
 void main() async {
