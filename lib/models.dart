@@ -1,3 +1,8 @@
+abstract class Model {
+  dynamic get identity;
+  dynamic toJson();
+}
+
 class Location {
   double latitude;
   double longitude;
@@ -15,9 +20,12 @@ class Location {
   };
 }
 
-class Education {
+class Education extends Model {
   dynamic id;
   String name;
+
+  @override
+  get identity => this.id;
 
   Education({this.id, this.name});
 
@@ -26,6 +34,7 @@ class Education {
     name: json['name'],
   );
 
+  @override
   dynamic toJson() => {
     'id': this.id,
     'name': this.name,
@@ -33,52 +42,40 @@ class Education {
 }
 
 class Competence {
-  dynamic id;
-  dynamic userId;
   dynamic educationId;
   int level;
 
-  Competence({this.id, this.userId, this.educationId, this.level});
+  Competence({this.educationId, this.level});
 
   factory Competence.fromJson(dynamic json) => Competence(
-      id: json['id'],
-      userId: json['userId'],
       educationId: json['educationId'],
       level: json['level']
   );
 
   dynamic toJson() => {
-    'id': this.id,
-    'userId': this.userId,
     'educationId': this.educationId,
     'level': this.level,
   };
 }
 
 class Expectance {
-  dynamic id;
-  dynamic userId;
   dynamic educationId;
   int level;
 
-  Expectance({this.id, this.userId, this.educationId, this.level});
+  Expectance({this.educationId, this.level});
 
   factory Expectance.fromJson(dynamic json) => Expectance(
-      id: json['id'],
-      userId: json['userId'],
       educationId: json['educationId'],
       level: json['level']
   );
 
   dynamic toJson() => {
-    'id': this.id,
-    'userId': this.userId,
     'educationId': this.educationId,
     'level': this.level,
   };
 }
 
-class User {
+class User extends Model {
   dynamic id;
   String userName;
   String firstName;
@@ -92,6 +89,9 @@ class User {
 
   List<Competence> competences = List();
   List<Expectance> expectances = List();
+
+  @override
+  get identity => this.id;
 
   User({this.id, this.userName, this.firstName, this.lastName, this.birthDate, this.teacher, this.student, this.graduation, this.location, Iterable<Competence> competences, Iterable<Expectance> expectances});
 
@@ -111,6 +111,7 @@ class User {
     expectances: json['expectances'].map((e) => Expectance.fromJson(e)).toList(),
   );
 
+  @override
   dynamic toJson() => {
     'id': this.id,
     'userName': this.userName,
