@@ -32,7 +32,7 @@ class _LoginState extends State<Login> {
                               BoxShadow(
                                 color: Colors.grey[350],
                                 blurRadius:
-                                20.0, // has the effect of softening the shadow
+                                20.0, /// has the effect of softening the shadow
                               )
                             ],
                           ),
@@ -74,6 +74,7 @@ class _LoginState extends State<Login> {
                                             icon:
                                             Icon(Icons.alternate_email),
                                           ),
+                                          /// I don't know why these lines appear
                                           validator: (value) {
                                             if (value.isEmpty) {
                                               Pattern pattern =
