@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revolt/Views/Dashboard.dart';
+import 'package:revolt/Views/Login.dart';
 import 'package:revolt/Views/Register.dart';
 import 'package:revolt/Views/Splash.dart';
 import 'package:revolt/Views/Wellcome.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => Splash(),
         '/wellcome': (context) => Wellcome(),
         '/dashboard': (context) => Dashboard(),
-        '/login': (context) => Register(),
+        '/register': (context) => Register(),
+        '/login': (context) => Login(),
         '/authcase': (context) => AuthCase(),
       },
       initialRoute: "/splash",

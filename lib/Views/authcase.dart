@@ -29,7 +29,7 @@ class _AuthCaseState extends State<AuthCase> {
                   elevation: 0.0,
                   child: MaterialButton(
                     onPressed: () async {
-                      Navigator.pushReplacementNamed(context, '/login');
+                      Navigator.pushNamed(context, '/login');
                     },
                     minWidth: MediaQuery.of(context).size.width,
                     child: Text(
@@ -50,7 +50,7 @@ class _AuthCaseState extends State<AuthCase> {
                   elevation: 0.0,
                   child: MaterialButton(
                     onPressed: () async {
-                      Navigator.pushReplacementNamed(context, '/register');
+                      Navigator.pushNamed(context, '/register');
                     },
                     minWidth: MediaQuery.of(context).size.width,
                     child: Text(
