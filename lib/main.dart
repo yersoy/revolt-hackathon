@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:revolt/screens/settings.dart';
 import 'package:revolt/screens/classroom/details.dart';
 
 import 'i18n.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         Routes.DASHBOARD: (context) => Dashboard(),
         Routes.CLASSROOM: (context) => Classroom(),
         Routes.SEARCH: (context) => Search(),
+        Routes.SETTINGS: (context) => Settings(),
         Routes.LESSON: (context) =>
             Details(ModalRoute.of(context).settings.arguments),
       },

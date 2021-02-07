@@ -18,7 +18,10 @@ class Auth {
   }
 
   static Future<AppUser> registerWithEmail(AppUser user) {
-    return _auth.createUserWithEmailAndPassword(email: user.email, password: user.password).then((credential) {
+    return _auth
+        .createUserWithEmailAndPassword(
+            email: user.email, password: user.password)
+        .then((credential) {
       return _messaging.getToken().then((token) {
         user.id = credential.user.uid;
         user.token = token;
@@ -31,15 +34,27 @@ class Auth {
 
   static Future<UserCredential> signInWithGoogle(AppUser user) {
     // Trigger the authentication flow
-    GoogleSignIn().signIn().then((account) => account.authentication).then((auth) {
-      final credential = GoogleAuthProvider.credential(accessToken: auth.accessToken, idToken: auth.idToken);
+    GoogleSignIn()
+        .signIn()
+        .then((account) => account.authentication)
+        .then((auth) {
+      final credential = GoogleAuthProvider.credential(
+          accessToken: auth.accessToken, idToken: auth.idToken);
 
-      return FirebaseAuth.instance.signInWithCredential(credential).then((credential) => credential.user).then((ouser) {
-        if (ouser == null) { return null; }
-
+      return FirebaseAuth.instance
+          .signInWithCredential(credential)
+          .then((credential) => credential.user)
+          .then((ouser) {
+        if (ouser == null) {
+          return null;
+        }
 
         _messaging.getToken().then((token) {
-          final user = AppUser(id: ouser.uid, firstName: ouser.displayName, email: ouser.email, token: token);
+          final user = AppUser(
+              id: ouser.uid,
+              firstName: ouser.displayName,
+              email: ouser.email,
+              token: token);
           _auth.currentUser.updateProfile(displayName: user.userName);
 
           return Services().users().save(user);
@@ -50,5 +65,9 @@ class Auth {
 
   static User getUserCredentials() {
     return _auth.currentUser;
+  }
+
+  static Future userSignOut() {
+    return _auth.signOut();
   }
 }

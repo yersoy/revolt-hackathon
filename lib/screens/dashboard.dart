@@ -53,7 +53,9 @@ class _DashboardState extends State<Dashboard> {
           IconButton(
             color: button.colorScheme.primary,
             icon: Icon(FontAwesomeIcons.cog),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.SETTINGS);
+            },
           ),
         ],
       ),
