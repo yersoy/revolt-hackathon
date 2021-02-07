@@ -1,3 +1,5 @@
+import 'package:latlong/latlong.dart';
+
 import 'convert.dart';
 
 abstract class Model {
@@ -120,10 +122,12 @@ class Lesson extends Model {
   String description;
   DateTime startDate;
   int duration;
+  String link;
+  LatLng location;
   
   final List<Participant> participants = List();
 
-  Lesson({this.id, this.userId, this.educationId, this.title, this.description, this.startDate, this.duration, Iterable<Participant> participants = const []}) {
+  Lesson({this.id, this.userId, this.educationId, this.title, this.description, this.startDate, this.duration,this.link,this.location, Iterable<Participant> participants = const []}) {
     this.participants.addAll(participants);
   }
 
@@ -135,7 +139,8 @@ class Lesson extends Model {
     description: json['description'],
     startDate: Convert.to<DateTime>(json['startDate']),
     duration: Convert.to<int>(json['duration']),
-
+    link: json["link"],
+    location: json["location"],
     participants: json['participants']?.map<Participant>((json) => Participant.fromJson(json))?.toList(),
   );
   
@@ -148,7 +153,8 @@ class Lesson extends Model {
     'description': this.description,
     'startDate': this.startDate,
     'duration': this.duration,
-
+    'link':this.link,
+    'location':this.location,
     'participants': this.participants.map((e) => e.toJson()).toList()
   };
 }

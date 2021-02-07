@@ -111,7 +111,7 @@ class _TeacherState extends State<Teacher> {
             children: [
               ListTile(
                 trailing: Icon(FontAwesomeIcons.graduationCap),
-                title: Text("Ders Sınıfı İstekleri"),
+                title: Text("Oluşturulan Dersler"),
               ),
               Container(
                 width: double.infinity,
@@ -130,7 +130,8 @@ class _TeacherState extends State<Teacher> {
                               Lesson _lesson = data.elementAt(index);
                               return ListTile(
                                 onTap: () {
-                                  Navigator.pushNamed(context, Routes.LESSON,arguments: _lesson);
+                                  Navigator.pushNamed(context, Routes.LESSON,
+                                      arguments: _lesson);
                                 },
                                 title: Text(_lesson.title),
                                 trailing:
