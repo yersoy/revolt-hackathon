@@ -1,3 +1,4 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:revolt/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,8 +37,11 @@ class _SplashState extends State<Splash> {
             return Center(
               child: Padding(
                 padding: EdgeInsets.all(65),
-                child: Image.asset(
-                  'assets/images/error.png',
+                child: FlareActor(
+                  "assets/flare/logo.flr",
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  animation: "idle",
                 ),
               ),
             );

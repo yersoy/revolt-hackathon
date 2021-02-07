@@ -49,6 +49,8 @@ dependencies:
 
   google_sign_in: "^4.5.1"
 
+  flare_flutter: ^2.0.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,6 +72,8 @@ flutter:
   assets:
     - assets/svg/
     - assets/images/
+    - assets/flare/
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -97,6 +101,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  # flutter pub run flutter_launcher_icons:main
 
 flutter_icons:
   android: true

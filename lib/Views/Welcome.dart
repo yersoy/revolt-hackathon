@@ -13,10 +13,20 @@ class _WelcomeState extends State<Welcome> {
   int currentPage = 0;
   Duration kAnimationDuration = Duration(milliseconds: 200);
   List<Map<String, String>> splashData = [
-    {"text": "Merhaba Education for Graduation'e Hoş Geldiniz.", "image": "assets/svg/teaching_opening.svg"},
-    {"text": "yakınınızdaki insanlara bağlanmanıza \n"
-        " ve bunları öğrenmenize veya onlara ders vermenize \n", "image": "assets/svg/world_opening.svg"},
-    {"text": "yardımcı olacak basit bir uygulama", "image": "assets/svg/school_opening.svg"},
+    {
+      "text":
+          "Gönüllü olarak Eğitim Vermek ve Eğitime ihtiyacı olan insanlara yardım etmek istermisin ?",
+      "image": "assets/svg/teaching_opening.svg"
+    },
+    {
+      "text": "Eğitim ihtiyacı olanları kolaylıkla bul \n"
+          "ister online ister yüz yüze eğitim ver \n",
+      "image": "assets/svg/world_opening.svg"
+    },
+    {
+      "text": "Eğitime Seviyesi Farketmeden Ücretsiz Eğitim al ve ver",
+      "image": "assets/svg/school_opening.svg"
+    },
   ];
   AnimatedContainer buildDot({int index}) {
     return AnimatedContainer(
@@ -38,7 +48,7 @@ class _WelcomeState extends State<Welcome> {
       children: <Widget>[
         Spacer(),
         Text(
-          "Revolt Hackathon",
+          "Revolt Education",
           style: TextStyle(
             fontSize: 25,
             color: Colors.black,
