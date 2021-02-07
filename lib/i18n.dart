@@ -36,7 +36,6 @@ class GlobalCustomLocalizations {
       'app.signout': 'Oturumu sonlandırmak istiyor musunuz?',
       'app.yes': 'Evet',
 
-
       'app.themes.red': 'Kırmızı',
       'app.themes.pink': 'Pembe',
       'app.themes.purple': 'Mor',
@@ -76,8 +75,7 @@ class GlobalCustomLocalizations {
       'signin.invalid': 'Geçersiz kullanıcı adı veya şifre',
 
       'home.title': 'Revolt',
-    }   ,
-
+    },
     Locales.EN: {
       'app.title': 'Revolt',
 
@@ -92,9 +90,8 @@ class GlobalCustomLocalizations {
       'app.ok': 'Ok',
       'app.save': 'Save',
       'app.saved': 'Saved',
-      'app.signout': 'Would you like to log out ?',
+      'app.signout': 'Are you sure to sign out?',
       'app.yes': 'Yes',
-
 
       'app.themes.red': 'Red',
       'app.themes.pink': 'Pink',
@@ -116,6 +113,18 @@ class GlobalCustomLocalizations {
       'app.themes.grey': 'Grey',
       'app.themes.blueGrey': 'Blue grey',
       'app.themes.black': 'Black',
+
+      'welcome.one.title': 'Hello',
+      'welcome.one.description': 'Bildiklerini öğretebilir veya merak ettiğin konularda eğitim alabilirsin',
+      'welcome.two.title': 'Learn and teach',
+      'welcome.two.description': 'Bilgi paylaştıkça çoğalır',
+      'welcome.three.title': 'Öğrenmenin yaşı yoktur',
+      'welcome.three.description': 'Hazırsan seni tanıyarak başlayalım',
+
+      'entrance.title': 'Join us',
+      'entrance.description': 'Bu sayede ilgilendiğin konularda eğitim alabilir, bilgini paylaşarak geleceği aydınlatabilirsin',
+      'entrance.signup': 'Sign Up',
+      'entrance.signin': 'Sign In',
 
       'signin.username': 'User name',
       'signin.password': 'Password',

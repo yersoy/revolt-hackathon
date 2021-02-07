@@ -40,4 +40,5 @@ class Services {
 
   Repository<Education> educations() { return Repository._(this.get(Keys.EDUCATIONS), revive: (data) => Education.fromJson(data)); }
   Repository<AppUser> users() { return Repository._(this.get(Keys.USERS), revive: (data) => AppUser.fromJson(data)); }
+  Repository<Lesson> lessons() { return Repository._(this.get(Keys.LESSONS), revive: (data) => Lesson.fromJson(data)); }
 }

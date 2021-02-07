@@ -1,6 +1,7 @@
 class Keys {
   static const String EDUCATIONS = 'educations';
   static const String USERS = 'users';
+  static const String LESSONS = 'lessons';
 }
 
 class Routes {

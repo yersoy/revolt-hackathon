@@ -28,15 +28,15 @@ class _SignupState extends State<Signup> {
     if ((_user.firstName ?? '').isEmpty) { this.scaffold.showSnackBar(SnackBar(content: Text('İsim boş olamaz'))); return; }
     if ((_user.lastName ?? '').isEmpty) { this.scaffold.showSnackBar(SnackBar(content: Text('Soyisim boş olamaz'))); return; }
     if ((_user.email ?? '').isEmpty) { this.scaffold.showSnackBar(SnackBar(content: Text('E-posta boş olamaz'))); return; }
-    // if ((_user.graduation ?? 0) < 0) { this.scaffold.showSnackBar(SnackBar(content: Text('Eğitim seviyenizi seçmelisiniz'))); return; }
     if ((_user.password ?? '').isEmpty) { this.scaffold.showSnackBar(SnackBar(content: Text('Parola boş olamaz'))); return; }
     if ((_user.password ?? '').length > 6) { this.scaffold.showSnackBar(SnackBar(content: Text('Parola 6 karakterden kısa olamaz'))); return; }
+    // if ((_user.graduation ?? 0) < 0) { this.scaffold.showSnackBar(SnackBar(content: Text('Eğitim seviyenizi seçmelisiniz'))); return; }
 
     showDialog(context: context, barrierDismissible: false,
       builder: (context) => Center(child: CircularProgressIndicator()),
     );
 
-    Auth.registerWithEmail(_user,context).then((user) {
+    Auth.registerWithEmail(_user).then((user) {
       Navigator.pop(context);
       if (user is AppUser) { Navigator.pushNamedAndRemoveUntil(context, Routes.DASHBOARD, (route) => true); } else {
         this.scaffold.showSnackBar(SnackBar(content: Text(resources.SIGNIN_INVALID)));
@@ -65,62 +65,47 @@ class _SignupState extends State<Signup> {
               ),
               Container(margin: EdgeInsets.only(bottom: 16.0), padding: EdgeInsets.only(left: 16.0),
                 decoration: BoxDecoration(color: theme.focusColor, borderRadius: BorderRadius.circular(8.0)),
-                child: TextFormField(
+                child: TextField(
                   decoration: InputDecoration(hintText: 'İsim', border: InputBorder.none,
                     icon: Icon(Icons.person_outline),
                   ),
                   onChanged: (firstName) { _user.firstName = firstName; },
-                  onFieldSubmitted: (e) { _submit(); },
+                  onSubmitted: (e) { _submit(); },
                 ),
               ),
               Container(margin: EdgeInsets.only(bottom: 16.0), padding: EdgeInsets.only(left: 16.0),
                 decoration: BoxDecoration(color: theme.focusColor, borderRadius: BorderRadius.circular(8.0)),
-                child: TextFormField(
+                child: TextField(
                   decoration: InputDecoration(hintText: 'Soyisim', border: InputBorder.none,
                     icon: Icon(Icons.person_outline_rounded),
                   ),
                   onChanged: (lastName) { _user.lastName = lastName; },
-                  onFieldSubmitted: (e) { _submit(); },
+                  onSubmitted: (e) { _submit(); },
                 ),
               ),
               Container(margin: EdgeInsets.only(bottom: 16.0), padding: EdgeInsets.only(left: 16.0),
                 decoration: BoxDecoration(color: theme.focusColor, borderRadius: BorderRadius.circular(8.0)),
-                child: TextFormField(
+                child: TextField(
                   decoration: InputDecoration(hintText: 'E-posta', border: InputBorder.none,
                     icon: Icon(Icons.alternate_email),
                   ),
                   onChanged: (email) { _user.email = email; },
-                  onFieldSubmitted: (e) { _submit(); },
+                  onSubmitted: (e) { _submit(); },
                 ),
               ),
               Container(margin: EdgeInsets.only(bottom: 16.0), padding: EdgeInsets.only(left: 16.0),
                 decoration: BoxDecoration(color: theme.focusColor, borderRadius: BorderRadius.circular(8.0)),
-                child: TextFormField(
+                child: TextField(
                   decoration: InputDecoration(hintText: 'Eğitim seviyesi', border: InputBorder.none,
                     icon: Icon(Icons.drive_file_rename_outline),
                   ),
                   onChanged: (graduation) { _user.graduation = int.parse(graduation); },
-                  onFieldSubmitted: (e) { _submit(); },
+                  onSubmitted: (e) { _submit(); },
                 ),
               ),
               Container(margin: EdgeInsets.only(bottom: 16.0), padding: EdgeInsets.only(left: 16.0),
                 decoration: BoxDecoration(color: theme.focusColor, borderRadius: BorderRadius.circular(8.0)),
-                child: Row(
-                  children: [
-                    Expanded(child: Text('Eğitim alacağım')),
-                    Checkbox(value: _user.teacher,
-                      onChanged: (value) { setState(() { _user.teacher = !_user.teacher; }); },
-                    ),
-                    Expanded(child: Text('Eğitim vereceğim')),
-                    Checkbox(value: _user.student,
-                      onChanged: (value) { setState(() { _user.student = !_user.student; }); },
-                    ),
-                  ],
-                ),
-              ),
-              Container(margin: EdgeInsets.only(bottom: 16.0), padding: EdgeInsets.only(left: 16.0),
-                decoration: BoxDecoration(color: theme.focusColor, borderRadius: BorderRadius.circular(8.0)),
-                child: TextFormField(obscureText: _visible,
+                child: TextField(obscureText: _visible,
                   decoration: InputDecoration(hintText: 'Parola', border: InputBorder.none,
                     icon: Icon(Icons.lock_outline),
                     suffixIcon: InkWell(borderRadius: BorderRadius.circular(32.0),
@@ -128,9 +113,19 @@ class _SignupState extends State<Signup> {
                       onTap: () { setState(() { _visible = !_visible; }); },
                     ),
                   ),
-                  validator: (password) { return (password.isEmpty ? 'Boş olamaz' : (password.length < 6 ? 'En azından 6 karakter olmalı' : null)); },
                   onChanged: (password) { _user.password = password; },
-                  onFieldSubmitted: (e) { _submit(); },
+                  onSubmitted: (e) { _submit(); },
+                ),
+              ),
+              Container(margin: EdgeInsets.only(bottom: 16.0), padding: EdgeInsets.only(left: 8.0),
+                decoration: BoxDecoration(color: theme.focusColor, borderRadius: BorderRadius.circular(8.0)),
+                child: Row(
+                  children: [
+                    Switch(value: _user.teacher,
+                      onChanged: (value) { setState(() { _user.teacher = !_user.teacher; }); },
+                    ),
+                    Expanded(child: Text(_user.teacher ? 'Eğitim vermek istiyorum' : 'Eğitim almak istiyorum', style: theme.textTheme.subtitle1)),
+                  ],
                 ),
               ),
               SizedBox(

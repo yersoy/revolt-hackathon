@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+final FirebaseMessaging _messaging = new FirebaseMessaging();
 
 class Auth {
   static Future<AppUser> login(String email, String password) {
@@ -17,12 +17,9 @@ class Auth {
     });
   }
 
-  static Future<AppUser> registerWithEmail(AppUser user, context) {
-    return _auth
-        .createUserWithEmailAndPassword(
-            email: user.email, password: user.password)
-        .then((credential) {
-      return _firebaseMessaging.getToken().then((token) {
+  static Future<AppUser> registerWithEmail(AppUser user) {
+    return _auth.createUserWithEmailAndPassword(email: user.email, password: user.password).then((credential) {
+      return _messaging.getToken().then((token) {
         user.id = credential.user.uid;
         user.token = token;
         credential.user.updateProfile(displayName: user.displayName);
@@ -32,32 +29,22 @@ class Auth {
     });
   }
 
-  static Future<UserCredential> signInWithGoogle(context, AppUser user) async {
+  static Future<UserCredential> signInWithGoogle(AppUser user) {
     // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    GoogleSignIn().signIn().then((account) => account.authentication).then((auth) {
+      final credential = GoogleAuthProvider.credential(accessToken: auth.accessToken, idToken: auth.idToken);
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+      return FirebaseAuth.instance.signInWithCredential(credential).then((credential) => credential.user).then((ouser) {
+        if (ouser == null) { return null; }
 
-    // Create a new credential
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    AppUser _iuser = new AppUser();
 
-    FirebaseAuth.instance.signInWithCredential(credential).then((value) {
-      if (value.user != null) {
-        _firebaseMessaging.getToken().then((token) {
-          _iuser.token = token;
-          _iuser.id = value.user.uid;
-          _auth.currentUser.updateProfile(displayName: _iuser.userName);
+        _messaging.getToken().then((token) {
+          final user = AppUser(id: ouser.uid, firstName: ouser.displayName, email: ouser.email, token: token);
+          _auth.currentUser.updateProfile(displayName: user.userName);
+
+          return Services().users().save(user);
         });
-        Services().users().save(_iuser);
-        Navigator.pushNamedAndRemoveUntil(
-            context, "/dashboard", (route) => false);
-      }
+      });
     });
   }
 
