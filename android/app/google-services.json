@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "731659682344",
+    "project_id": "revolt-hackathon",
+    "storage_bucket": "revolt-hackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731659682344:android:72a9cd502ae119c52feb1d",
+        "android_client_info": {
+          "package_name": "com.revolt.hackathon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731659682344-tqesth80o5orv8ldg3lh8pevce64e3od.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQIpjiWVOT9PN0wipy2qQTGuob6bn2mRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731659682344-tqesth80o5orv8ldg3lh8pevce64e3od.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
