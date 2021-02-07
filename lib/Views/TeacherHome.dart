@@ -25,6 +25,19 @@ class _TeacherHomeState extends State<TeacherHome> {
     super.initState();
   }
 
+  Marker _markerItem(LatLng location) {
+    return Marker(
+      width: 40.0,
+      height: 40.0,
+      point: location,
+      builder: (ctx) => Container(
+        child: Image.asset(
+          "assets/images/location-pin.png",
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,18 +70,7 @@ class _TeacherHomeState extends State<TeacherHome> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         LatLng mylocation = LatLng(snapshot.data[0].latitude,
                             snapshot.data[0].longitude);
-                        var markers = [
-                          Marker(
-                            width: 40.0,
-                            height: 40.0,
-                            point: mylocation,
-                            builder: (ctx) => Container(
-                              child: Image.asset(
-                                "assets/images/location-pin.png",
-                              ),
-                            ),
-                          ),
-                        ];
+                        List<Marker> markers = [_markerItem(mylocation)];
                         return FlutterMap(
                           options: MapOptions(
                             center: mylocation,

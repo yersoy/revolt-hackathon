@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 abstract class Model {
   dynamic get identity;
   dynamic toJson();
@@ -137,3 +139,110 @@ class IUser extends Model {
         'expectances': this.expectances.map((e) => e.toJson()).toList(),
       };
 }
+
+
+
+/// __________________________________________________TEMPORARY CLASS CREATED BY JORDY ________________________________
+/// This class model is used as a example of different subjects That can be learned and are teached by teachers
+/// This class will be deleted as soon as the real values will be entered taken fecthed from the firebase
+///
+class SubjectsModel {
+  String name;
+  String type;
+  String usage;
+  String image;
+
+  SubjectsModel ({
+    this.name,
+    this.type,
+    this.usage,
+    this.image,
+  });
+
+  SubjectsModelcopyWith({
+    String name,
+    String type,
+    String usage,
+
+    String image,
+  }) =>
+      SubjectsModel(
+        name: name ?? this.name,
+        type: type ?? this.type,
+        usage: usage ?? this.usage,
+        image: image ?? this.image,
+      );
+
+  factory SubjectsModel.fromRawJson(String str) => SubjectsModel.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory SubjectsModel.fromJson(Map<String, dynamic> json) => SubjectsModel(
+    name: json["name"] == null ? null : json["name"],
+    type: json["type"] == null ? null : json["type"],
+    usage: json["usage"] == null ? null : json["usage"],
+    image: json["image"] == null ? null : json["image"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name == null ? null : name,
+    "type": type == null ? null : type,
+    "usage": usage == null ? null : usage,
+    "image": image == null ? null : image,
+  };
+}
+
+final subjectMapList = [
+  {
+    "name": "Matematik",
+    "type": "Ortaokul Öğrenci ",
+    "usage": "3 öğretmen",
+    "image":"assets/images/konu.jpg",
+  }, {
+    "name": "Fen Bilimleri",
+    "type": "Ortaokul",
+    "usage": "8 öğretmen",
+    "image":"assets/images/konu.jpg",
+  }, {
+    "name": "Dil",
+    "type": "Anaokul",
+    "usage": "21 öğretmen",
+    "image":"assets/images/konu.jpg",
+  }, {
+    "name": "Okuma - Yazma",
+    "type": "Anaokul",
+    "usage": "12 öğretmen",
+    "image":"assets/images/konu.jpg",
+  }, {
+    "name": "İngilizce",
+    "type": "Orta okul",
+    "usage": "5 öğretmen",
+    "image":"assets/images/konu.jpg",
+  }, {
+    "name": "Dil bilgisi",
+    "type": "Orta Okul",
+    "usage": "",
+    "image":"assets/images/konu.jpg",
+  }, {
+    "name": "Fizik",
+    "type": "Lise",
+    "usage": "9 öğretmen",
+    "image":"assets/images/konu.jpg",
+  },
+  {
+    "name": "Sanat ve Müzik",
+    "type": " Orta Okul",
+    "usage": "3 öğretmen",
+    "image":"assets/images/konu.jpg",
+  },
+
+  {
+    "name": "Bilgisayar a Giris",
+    "type": " Açık Eğitim",
+    "usage": " 7 öğretmen",
+    "image":"assets/images/konu.jpg",
+  },
+];
+
+
+///-------------------------------------------------------------------------------------------------------------
