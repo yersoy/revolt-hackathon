@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-
+/// __________________ mY imports _______________________
+import 'package:revolt/auth.dart';
 import '../theme.dart';
 
 class Login extends StatefulWidget {
@@ -131,6 +132,10 @@ class _LoginState extends State<Login> {
                                         elevation: 0.0,
                                         child: MaterialButton(
                                           onPressed: () async {
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              await Auth.login(_email.text, _password.text,context);
+                                            }
 
                                           },
                                           minWidth: MediaQuery.of(context)
@@ -166,8 +171,9 @@ class _LoginState extends State<Login> {
                                           padding:
                                           const EdgeInsets.all(8.0),
                                           child: MaterialButton(
-                                              onPressed: () async {
 
+                                              onPressed: () async {
+                                            await  Auth.signInWithGoogle(context);
                                               },
                                               child: Image.asset(
                                                 "assets/images/google_search.png",
