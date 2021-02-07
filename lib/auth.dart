@@ -9,66 +9,36 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
 class Auth {
-  static Future login(String email, String password, context) {
-    _auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .then((value) {
-      if (value.user.uid.isNotEmpty) {
-        Navigator.pushReplacementNamed(context, '/dashboard');
-      }
+  static Future<AppUser> login(String email, String password) {
+    _auth.signInWithEmailAndPassword(email: email, password: password).then((value) {
+      if (value.user.uid.isNotEmpty) {  }
     });
   }
 
-  static Future registerWithEmail(IUser myUser, context) async {
-    try {
-      await _auth
-          .createUserWithEmailAndPassword(
-              email: myUser.email, password: myUser.password)
-          .then((value) {
-        _firebaseMessaging.getToken().then((token) {
-          myUser.token = token;
-          myUser.id = value.user.uid;
-          value.user.updateProfile(displayName: myUser.userName);
+  static Future<AppUser> registerWithEmail(AppUser user, context) {
+    return _auth.createUserWithEmailAndPassword(email: user.email, password: user.password).then((credential) {
+      return _firebaseMessaging.getToken().then((token) {
+        user.id = credential.user.uid; user.token = token;
+        credential.user.updateProfile(displayName: user.displayName);
 
-          Services().users().save(myUser);
-          Navigator.pushNamedAndRemoveUntil(
-              context, "/dashboard", (route) => false);
-        });
+        return Services().users().save(user);
       });
-    } on FirebaseAuthException catch (e) {
-      Future.delayed(Duration.zero, () {
-        if (e.code == 'invalid-email') {
-          return 'Error : Your Email is Not Valid';
-        } else if (e.code == 'user-not-found') {
-          return 'Error : User Not Found try again';
-        } else if (e.code == 'wrong-password') {
-          return 'Error : Your Password is wrong';
-        }
-        if (e.code == 'weak-password') {
-          return 'Your Password is too Weak';
-        } else if (e.code == 'email-already-in-use') {
-          return 'Your E-Mail is used already try another or try to login anonim';
-        }
-      });
-    } catch (e) {
-      return e.toString();
-    }
+    });
   }
 
-  static Future<UserCredential> signInWithGoogle(context, IUser user) async {
+  static Future<UserCredential> signInWithGoogle(context, AppUser user) async {
     // Trigger the authentication flow
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
     // Create a new credential
     final GoogleAuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    IUser _iuser = new IUser();
+    AppUser _iuser = new AppUser();
 
     FirebaseAuth.instance.signInWithCredential(credential).then((value) {
       if (value.user != null) {

@@ -5,22 +5,21 @@ import 'package:latlong/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 
-import '../utils.dart';
-import '../theme.dart';
-import '../models.dart';
+import '../../utils.dart';
+import '../../models.dart';
 
-class StudentHome extends StatefulWidget {
-  StudentHome({Key key}) : super(key: key);
+class Student extends StatefulWidget {
+  Student({Key key}) : super(key: key);
 
   @override
-  _StudentHomeState createState() => _StudentHomeState();
+  _StudentState createState() => _StudentState();
 }
 
-class _StudentHomeState extends State<StudentHome> {
+class _StudentState extends State<Student> {
   List<Education>  _educations = List();
-  Position myposition;
+  Position _position;
 
-  Widget _SubjectsList() {
+  Widget _subjects() {
     return SliverList(
       delegate: SliverChildListDelegate(
         [
@@ -96,7 +95,7 @@ class _StudentHomeState extends State<StudentHome> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left:18.0),
-                child: Text("Öğrenebileceğiniz konular", style: TextStyles.titleNormal),
+                child: Text('Öğrenebileceğiniz konular'),
               ),
               IconButton(
                   icon: Icon(
@@ -120,6 +119,8 @@ class _StudentHomeState extends State<StudentHome> {
   }
 
   Widget _subjectsTile(Education model) {
+    final theme = Theme.of(context), text = theme.textTheme;
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
@@ -129,12 +130,12 @@ class _StudentHomeState extends State<StudentHome> {
           BoxShadow(
             offset: Offset(4, 4),
             blurRadius: 10,
-            color: ThemeColor.grey.withOpacity(.2),
+            color: Colors.black12,
           ),
           BoxShadow(
             offset: Offset(-3, 0),
             blurRadius: 15,
-            color: ThemeColor.grey.withOpacity(.1),
+            color: Colors.black12,
           )
         ],
       ),
@@ -159,7 +160,7 @@ class _StudentHomeState extends State<StudentHome> {
           //     ),
           //   ),
           // ),
-          title: Text(model.name, style: TextStyles.titleNormal),
+          title: Text(model.name, style: text.headline3),
           // subtitle: Text(model.usage,
           //   style: TextStyles.titleMedium,
           // ),
@@ -175,11 +176,13 @@ class _StudentHomeState extends State<StudentHome> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     return Scaffold(
-      backgroundColor: ThemeColor.background,
+      backgroundColor: theme.backgroundColor,
       body: CustomScrollView(
         slivers: <Widget>[
-          _SubjectsList(),
+          _subjects(),
         ],
       ),
     );

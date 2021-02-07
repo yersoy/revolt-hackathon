@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import './StudentHome.dart';
-import './TeacherHome.dart';
+import '../constants.dart';
+import './dashboard/student.dart';
+import './dashboard/teacher.dart';
+import 'classroom.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
@@ -11,14 +14,14 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  bool teacher = true;
+  bool _teacher = true;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context), button = theme.buttonTheme;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(elevation: 3.0,
         backgroundColor: Colors.transparent, shadowColor: Colors.transparent,
         leading: Padding(padding: EdgeInsets.only(left: 8.0),
           child: Image.asset('assets/images/logo.png'),
@@ -34,7 +37,11 @@ class _DashboardState extends State<Dashboard> {
           ),
         ],
       ),
-      body: teacher ? TeacherHome() : StudentHome(),
+      body: (_teacher ? Teacher() : Student()),
+      floatingActionButton: (_teacher ? FloatingActionButton(
+        child: Icon(FontAwesomeIcons.plus),
+        onPressed: () { Navigator.pushNamed(context, Routes.CLASSROOM); },
+      ) : null),
     );
   }
 }

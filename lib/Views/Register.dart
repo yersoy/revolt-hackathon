@@ -21,7 +21,7 @@ class _RegisterState extends State<Register> {
   TextEditingController _password = TextEditingController();
   TextEditingController _name = TextEditingController();
 
-  IUser _userRegister = IUser();
+  AppUser _userRegister = AppUser();
 
   bool _isCheckedTakeClass = false;
   bool _isCheckedGiveClass = false;

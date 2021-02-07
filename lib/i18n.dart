@@ -58,7 +58,19 @@ class GlobalCustomLocalizations {
       'app.themes.blueGrey': 'Duman Mavi',
       'app.themes.black': 'Siyah',
 
-      'signin.username': 'Kullanıcı Adı',
+      'welcome.one.title': 'Merhaba',
+      'welcome.one.description': 'Bildiklerini öğretebilir veya merak ettiğin konularda eğitim alabilirsin',
+      'welcome.two.title': 'Öğren ve öğret',
+      'welcome.two.description': 'Bilgi paylaştıkça çoğalır',
+      'welcome.three.title': 'Öğrenmenin yaşı yoktur',
+      'welcome.three.description': 'Hazırsan seni tanıyarak başlayalım',
+
+      'entrance.title': 'Sende bize katıl',
+      'entrance.description': 'Bu sayede ilgilendiğin konularda eğitim alabilir, bilgini paylaşarak geleceği aydınlatabilirsin',
+      'entrance.signup': 'Kayıt Ol',
+      'entrance.signin': 'Oturum Aç',
+
+      'signin.username': 'E-posta',
       'signin.password': 'Şifre',
       'signin.enter': 'Giriş',
       'signin.invalid': 'Geçersiz kullanıcı adı veya şifre',
@@ -148,6 +160,18 @@ class GlobalCustomLocalizations {
   String get APP_UNITS_KILOMETERS { return this.get('app.units.kilometers'); }
   String get APP_UNITS_CALORIES { return this.get('app.units.calories'); }
   String get APP_UNITS_KILOCALORIES { return this.get('app.units.kilocalories'); }
+
+  String get WELCOME_ONE_TITLE { return this.get('welcome.one.title'); }
+  String get WELCOME_ONE_DESCRIPTION { return this.get('welcome.one.description'); }
+  String get WELCOME_TWO_TITLE { return this.get('welcome.two.title'); }
+  String get WELCOME_TWO_DESCRIPTION { return this.get('welcome.two.description'); }
+  String get WELCOME_THREE_TITLE { return this.get('welcome.three.title'); }
+  String get WELCOME_THREE_DESCRIPTION { return this.get('welcome.three.description'); }
+
+  String get ENTRANCE_TITLE { return this.get('entrance.title'); }
+  String get ENTRANCE_DESCRIPTION { return this.get('entrance.description'); }
+  String get ENTRANCE_SIGNUP { return this.get('entrance.signup'); }
+  String get ENTRANCE_SIGNIN { return this.get('entrance.signin'); }
 
   String get SIGNIN_USERNAME { return this.get('signin.username'); }
   String get SIGNIN_PASSWORD { return this.get('signin.password'); }

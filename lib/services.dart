@@ -1,12 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'constants.dart';
 import 'models.dart';
-
-class Keys {
-  static const String EDUCATIONS = 'educations';
-  static const String USERS = 'users';
-}
 
 typedef Reviver<T> = T Function(dynamic data);
 
@@ -19,7 +15,7 @@ class Repository<T extends Model> {
   Future<Iterable<T>> all() { return _collection.get().then((query) => query.docs.map((doc) => _revive(doc.data())).toList()); }
 
   Future<T> get(dynamic id) { return _collection.doc(id).get().then((snapshot) => _revive(snapshot.data())); }
-  Future<T> save(T data) { return _collection.doc(data.identity).set(data.toJson()).then((e) => data); }
+  Future<T> save(T model) { final data = model.toJson(), document = _collection.doc(data['id']); return document.set(data..update('id', (id) => document.id)).then((e) => _revive(data)); }
   Future<void> delete (dynamic id) { return _collection.doc(id).delete(); }
 }
 
@@ -43,5 +39,5 @@ class Services {
   CollectionReference get(dynamic key) { return _collections.putIfAbsent(key, () => _store.collection(key)); }
 
   Repository<Education> educations() { return Repository._(this.get(Keys.EDUCATIONS), revive: (data) => Education.fromJson(data)); }
-  Repository<IUser> users() { return Repository._(this.get(Keys.USERS), revive: (data) => IUser.fromJson(data)); }
+  Repository<AppUser> users() { return Repository._(this.get(Keys.USERS), revive: (data) => AppUser.fromJson(data)); }
 }

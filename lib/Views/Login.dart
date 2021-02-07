@@ -133,11 +133,9 @@ class _LoginState extends State<Login> {
                                         elevation: 0.0,
                                         child: MaterialButton(
                                           onPressed: () async {
-                                            if (_formKey.currentState
-                                                .validate()) {
-                                              await Auth.login(_email.text, _password.text,context);
+                                            if (_formKey.currentState.validate()) {
+                                              await Auth.login(_email.text, _password.text);
                                             }
-
                                           },
                                           minWidth: MediaQuery.of(context)
                                               .size
@@ -174,7 +172,7 @@ class _LoginState extends State<Login> {
                                           child: MaterialButton(
 
                                               onPressed: () async {
-                                            await  Auth.signInWithGoogle(context,new IUser());
+                                            await  Auth.signInWithGoogle(context,new AppUser());
                                               },
                                               child: Image.asset(
                                                 "assets/images/google_search.png",
