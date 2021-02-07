@@ -29,7 +29,7 @@ class _SignupState extends State<Signup> {
     if ((_user.lastName ?? '').isEmpty) { this.scaffold.showSnackBar(SnackBar(content: Text('Soyisim boş olamaz'))); return; }
     if ((_user.email ?? '').isEmpty) { this.scaffold.showSnackBar(SnackBar(content: Text('E-posta boş olamaz'))); return; }
     if ((_user.password ?? '').isEmpty) { this.scaffold.showSnackBar(SnackBar(content: Text('Parola boş olamaz'))); return; }
-    if ((_user.password ?? '').length > 6) { this.scaffold.showSnackBar(SnackBar(content: Text('Parola 6 karakterden kısa olamaz'))); return; }
+    if ((_user.password ?? '').isEmpty) { this.scaffold.showSnackBar(SnackBar(content: Text('Parola 6 karakterden kısa olamaz'))); return; }
     // if ((_user.graduation ?? 0) < 0) { this.scaffold.showSnackBar(SnackBar(content: Text('Eğitim seviyenizi seçmelisiniz'))); return; }
 
     showDialog(context: context, barrierDismissible: false,
