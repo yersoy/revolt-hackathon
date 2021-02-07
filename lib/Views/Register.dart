@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revolt/theme.dart';
 
 
 class Register extends StatefulWidget {
@@ -18,6 +19,9 @@ class _RegisterState extends State<Register> {
   TextEditingController _password = TextEditingController();
   TextEditingController _name = TextEditingController();
   TextEditingController _phone = TextEditingController();
+
+  bool _isCheckedTakeClass = false;
+  bool _isCheckedGiveClass = false;
 
 
 
@@ -47,6 +51,9 @@ class _RegisterState extends State<Register> {
               child: Form(
                   key: _formKey,
                   child: ListView(
+                    shrinkWrap: false,
+                    scrollDirection: Axis.vertical,
+
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -137,6 +144,44 @@ class _RegisterState extends State<Register> {
                             ),
                           ),
                         ),
+                      ), Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(14.0, 8.0, 14.0, 8.0),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.grey.withOpacity(0.2),
+                          elevation: 0.0,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 18.0),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(child:Text('  Eğitim alacağım')),
+                                Checkbox(
+                                  checkColor: ThemeColor.accentBlue,
+                                  activeColor: Colors.white,
+                                value: _isCheckedGiveClass,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isCheckedGiveClass= !_isCheckedGiveClass;
+                                  });
+                                },
+                              ),Expanded(child: Text('Eğitim vereceğim')),
+                                Checkbox(
+                                  checkColor: ThemeColor.accentBlue,
+                                  activeColor: Colors.white,
+                                  value: _isCheckedTakeClass,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _isCheckedTakeClass = !_isCheckedTakeClass;
+                                    });
+                                  },
+                                )
+
+                              ]
+                              ,
+                            ),
+                          ),
+                        ),
                       ),
                       Padding(
                         padding:
@@ -206,14 +251,14 @@ class _RegisterState extends State<Register> {
                         padding:
                             EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                         child: Material(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                           color: Theme.of(context).primaryColor,
                           elevation: 0.0,
                           child: MaterialButton(
                             onPressed: () async {},
                             minWidth: MediaQuery.of(context).size.width,
                             child: Text(
-                              "Oturum Aç",
+                              "Kayıt Ol",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Colors.white,

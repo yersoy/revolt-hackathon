@@ -13,9 +13,10 @@ class _WelcomeState extends State<Welcome> {
   int currentPage = 0;
   Duration kAnimationDuration = Duration(milliseconds: 200);
   List<Map<String, String>> splashData = [
-    {"text": "Merhaba", "image": "assets/svg/teaching_opening.svg"},
-    {"text": "", "image": "assets/svg/world_opening.svg"},
-    {"text": " ", "image": "assets/svg/school_opening.svg"},
+    {"text": "Merhaba Education for Graduation'e Hoş Geldiniz.", "image": "assets/svg/teaching_opening.svg"},
+    {"text": "yakınınızdaki insanlara bağlanmanıza \n"
+        " ve bunları öğrenmenize veya onlara ders vermenize \n", "image": "assets/svg/world_opening.svg"},
+    {"text": "yardımcı olacak basit bir uygulama", "image": "assets/svg/school_opening.svg"},
   ];
   AnimatedContainer buildDot({int index}) {
     return AnimatedContainer(
@@ -46,7 +47,7 @@ class _WelcomeState extends State<Welcome> {
         ),
         Text(
           text,
-          style: TextStyle(fontSize: 21, fontWeight: FontWeight.w100),
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w100),
           textAlign: TextAlign.center,
         ),
         Spacer(flex: 2),

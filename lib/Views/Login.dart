@@ -126,7 +126,7 @@ class _LoginState extends State<Login> {
                                         74.0, 21.0, 74.0, 8.0),
                                     child: Material(
                                         borderRadius:
-                                        BorderRadius.circular(20.0),
+                                        BorderRadius.circular(7.0),
                                         color: ThemeColor.accentBlue,
                                         elevation: 0.0,
                                         child: MaterialButton(
