@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:geolocator/geolocator.dart';
+
+import 'package:latlong/latlong.dart';
 import 'package:revolt/i18n.dart';
 
 import '../Auth.dart';
@@ -9,6 +14,7 @@ import '../convert.dart';
 
 import '../models.dart';
 import '../services.dart';
+import '../utils.dart';
 
 class Classroom extends StatefulWidget {
   Classroom({Key key}) : super(key: key);
@@ -29,6 +35,85 @@ class _ClassroomState extends State<Classroom> {
     return Services().educations().all();
   }
 
+  Marker _markerItem(LatLng location) {
+    return Marker(
+      width: 40.0,
+      height: 40.0,
+      point: location,
+      builder: (context) => Container(
+        child: Image.asset('assets/images/location-pin.png'),
+      ),
+    );
+  }
+
+  setLocation() {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Konum Seçiniz'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  height: 250,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: FutureBuilder(
+                          future: Future.wait([
+                            Utils.determinePosition(),
+                          ]),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              LatLng mylocation = LatLng(
+                                  snapshot.data[0].latitude,
+                                  snapshot.data[0].longitude);
+                              List<Marker> markers = [_markerItem(mylocation)];
+                              return FlutterMap(
+                                options: MapOptions(
+                                  onTap: (location) {
+                                    mylocation = location;
+                                  },
+                                  center: mylocation,
+                                  zoom: 13.0,
+                                ),
+                                layers: [
+                                  TileLayerOptions(
+                                      urlTemplate:
+                                          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                      subdomains: ['a', 'b', 'c']),
+                                  MarkerLayerOptions(markers: markers),
+                                ],
+                              );
+                            }
+                            return Card();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Gönder'),
+              onPressed: () {
+                final snackBar =
+                    SnackBar(content: Text('Öğrenciler Bilgilendirildi !'));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final resources = GlobalCustomLocalizations.of(context);
@@ -39,7 +124,10 @@ class _ClassroomState extends State<Classroom> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
         onPressed: () {
-          Services().lessons().save(_lesson).then((value) => Navigator.pop(context));
+          Services()
+              .lessons()
+              .save(_lesson)
+              .then((value) => Navigator.pop(context));
         },
       ),
       body: ListView(
@@ -186,6 +274,35 @@ class _ClassroomState extends State<Classroom> {
                     ),
                     onChanged: (duration) {
                       _lesson.duration = int.parse(duration);
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(12.0),
+            child: Material(
+              borderRadius: BorderRadius.circular(10.0),
+              color: Colors.grey.withOpacity(0.2),
+              child: Container(
+                padding: EdgeInsets.only(left: 12.0),
+                child: ListTile(
+                  leading: Icon(FontAwesomeIcons.locationArrow),
+                  title: FutureBuilder(
+                    future: Utils.determinePosition(),
+                    builder: (context, snapshot) {
+                      Position myloc = snapshot.data;
+                      _lesson.location = Location(
+                          latitude: myloc.latitude, longitude: myloc.longitude);
+                      return TextFormField(
+                        initialValue: snapshot.data.toString(),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: 'Ders Konumu Seç',
+                          border: InputBorder.none,
+                        ),
+                      );
                     },
                   ),
                 ),

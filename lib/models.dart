@@ -70,48 +70,58 @@ class AppUser extends Model {
 
   String get displayName => [this.firstName, this.lastName].join(' ').trim();
 
-  AppUser({this.id, this.userName, this.password, this.firstName, this.lastName, this.email, this.birthDate, this.teacher = false, this.graduation = 0, this.token});
+  AppUser(
+      {this.id,
+      this.userName,
+      this.password,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.birthDate,
+      this.teacher = false,
+      this.graduation = 0,
+      this.token});
 
   factory AppUser.fromJson(dynamic json) => AppUser(
-    id: json['id'],
-    userName: json['userName'],
-    password: json['password'],
-    firstName: json['firstName'],
-    lastName: json['lastName'],
-    email: json['email'],
-    birthDate: Convert.to<DateTime>(json['birthDate']),
-    teacher: json['teacher'],
-    graduation: json['graduation'],
-    token: json['token'],
-  );
+        id: json['id'],
+        userName: json['userName'],
+        password: json['password'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        email: json['email'],
+        birthDate: Convert.to<DateTime>(json['birthDate']),
+        teacher: json['teacher'],
+        graduation: json['graduation'],
+        token: json['token'],
+      );
 
   @override
   dynamic toJson() => {
-    'id': this.id,
-    'userName': this.userName,
-    'password': this.password,
-    'firstName': this.firstName,
-    'lastName': this.lastName,
-    'email': this.email,
-    'birthDate': this.birthDate,
-    'teacher': this.teacher,
-    'graduation': this.graduation,
-    'token': this.token,
-  };
+        'id': this.id,
+        'userName': this.userName,
+        'password': this.password,
+        'firstName': this.firstName,
+        'lastName': this.lastName,
+        'email': this.email,
+        'birthDate': this.birthDate,
+        'teacher': this.teacher,
+        'graduation': this.graduation,
+        'token': this.token,
+      };
 }
 
 class Participant {
   dynamic userId;
-  
+
   Participant({this.userId});
 
   factory Participant.fromJson(dynamic json) => Participant(
-    userId: json['userId'],
-  );
+        userId: json['userId'],
+      );
 
   dynamic toJson() => {
-    'userId': this.userId,
-  };
+        'userId': this.userId,
+      };
 }
 
 class Lesson extends Model {
@@ -123,38 +133,50 @@ class Lesson extends Model {
   DateTime startDate;
   int duration;
   String link;
-  LatLng location;
-  
+  Location location;
+
   final List<Participant> participants = List();
 
-  Lesson({this.id, this.userId, this.educationId, this.title, this.description, this.startDate, this.duration,this.link,this.location, Iterable<Participant> participants = const []}) {
+  Lesson(
+      {this.id,
+      this.userId,
+      this.educationId,
+      this.title,
+      this.description,
+      this.startDate,
+      this.duration,
+      this.link,
+      this.location,
+      Iterable<Participant> participants = const []}) {
     this.participants.addAll(participants);
   }
 
   factory Lesson.fromJson(dynamic json) => Lesson(
-    id: json['id'],
-    userId: json['userId'],
-    educationId: json['educationId'],
-    title: json['title'],
-    description: json['description'],
-    startDate: Convert.to<DateTime>(json['startDate']),
-    duration: Convert.to<int>(json['duration']),
-    link: json["link"],
-    location: json["location"],
-    participants: json['participants']?.map<Participant>((json) => Participant.fromJson(json))?.toList(),
-  );
-  
+        id: json['id'],
+        userId: json['userId'],
+        educationId: json['educationId'],
+        title: json['title'],
+        description: json['description'],
+        startDate: Convert.to<DateTime>(json['startDate']),
+        duration: Convert.to<int>(json['duration']),
+        link: json["link"],
+        location: json["location"],
+        participants: json['participants']
+            ?.map<Participant>((json) => Participant.fromJson(json))
+            ?.toList(),
+      );
+
   @override
   dynamic toJson() => {
-    'id': this.id,
-    'userId': this.userId,
-    'educationId': this.educationId,
-    'title': this.title,
-    'description': this.description,
-    'startDate': this.startDate,
-    'duration': this.duration,
-    'link':this.link,
-    'location':this.location,
-    'participants': this.participants.map((e) => e.toJson()).toList()
-  };
+        'id': this.id,
+        'userId': this.userId,
+        'educationId': this.educationId,
+        'title': this.title,
+        'description': this.description,
+        'startDate': this.startDate,
+        'duration': this.duration,
+        'link': this.link,
+        'location': this.location,
+        'participants': this.participants.map((e) => e.toJson()).toList()
+      };
 }
