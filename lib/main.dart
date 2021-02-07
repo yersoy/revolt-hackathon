@@ -7,6 +7,8 @@ import 'package:revolt/Views/Welcome.dart';
 import 'package:revolt/Views/AuthCase.dart';
 import 'package:revolt/theme.dart';
 
+import 'Views/Search_page.dart';
+
 void main() async {
   runApp(MyApp());
 }
@@ -26,8 +28,9 @@ class MyApp extends StatelessWidget {
         '/register': (context) => Register(),
         '/login': (context) => Login(),
         '/authcase': (context) => AuthCase(),
+        '/search_page': (context) => SearchBar(),
       },
-      initialRoute: "/splash",
+      initialRoute: "/dashboard",
     );
   }
 }

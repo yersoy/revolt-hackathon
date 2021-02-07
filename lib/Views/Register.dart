@@ -187,8 +187,7 @@ class _RegisterState extends State<Register> {
                                   value: _isCheckedGiveClass,
                                   onChanged: (value) {
                                     setState(() {
-                                      _isCheckedGiveClass =
-                                          !_isCheckedGiveClass;
+                                      _isCheckedGiveClass = !_isCheckedGiveClass;
                                     });
                                   },
                                 ),
