@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:revolt/models.dart';
 import 'package:revolt/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,22 +9,31 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
 class Auth {
-  static Future login(String email, String password) {
-    return _auth.signInWithEmailAndPassword(email: email, password: password);
+  static Future login(String email, String password, context) {
+    _auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((value) {
+      if (value.user.uid.isNotEmpty) {
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      }
+    });
   }
 
-  static Future registerWithEmail(IUser myUser) async {
+  static Future registerWithEmail(IUser myUser, context) async {
     try {
       var myauth = await _auth.createUserWithEmailAndPassword(
           email: myUser.email, password: myUser.password);
-      _firebaseMessaging.getToken().then((token) {
-        myUser.token = token;
-        myUser.id = myauth.user.uid;
-        myauth.user.updateProfile(displayName: myUser.userName);
-        // firestore.collection('newusers').doc(myUser.email).set(myUser.asMap());
-      });
-      Services().users().save(myUser);
-      return _auth.currentUser;
+
+      if (_auth.currentUser != null) {
+        _firebaseMessaging.getToken().then((token) {
+          myUser.token = token;
+          myUser.id = myauth.user.uid;
+          myauth.user.updateProfile(displayName: myUser.userName);
+          // firestore.collection('newusers').doc(myUser.email).set(myUser.asMap());
+        });
+        Services().users().save(myUser);
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      }
     } on FirebaseAuthException catch (e) {
       Future.delayed(Duration.zero, () {
         if (e.code == 'invalid-email') {
@@ -44,7 +54,7 @@ class Auth {
     }
   }
 
-  static Future<UserCredential> signInWithGoogle() async {
+  static Future<UserCredential> signInWithGoogle(context) async {
     // Trigger the authentication flow
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
@@ -57,8 +67,18 @@ class Auth {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+    IUser _iuser = new IUser();
 
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    FirebaseAuth.instance.signInWithCredential(credential).then((value) {
+      if (value.user != null) {
+        _firebaseMessaging.getToken().then((token) {
+          _iuser.token = token;
+          _iuser.id = value.user.uid;
+          _auth.currentUser.updateProfile(displayName: _iuser.userName);
+        });
+        Services().users().save(_iuser);
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      }
+    });
   }
 }
