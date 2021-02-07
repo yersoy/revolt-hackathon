@@ -10,15 +10,21 @@ final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
 class Auth {
   static Future<AppUser> login(String email, String password) {
-    _auth.signInWithEmailAndPassword(email: email, password: password).then((value) {
-      if (value.user.uid.isNotEmpty) {  }
+    _auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((value) {
+      if (value.user.uid.isNotEmpty) {}
     });
   }
 
   static Future<AppUser> registerWithEmail(AppUser user, context) {
-    return _auth.createUserWithEmailAndPassword(email: user.email, password: user.password).then((credential) {
+    return _auth
+        .createUserWithEmailAndPassword(
+            email: user.email, password: user.password)
+        .then((credential) {
       return _firebaseMessaging.getToken().then((token) {
-        user.id = credential.user.uid; user.token = token;
+        user.id = credential.user.uid;
+        user.token = token;
         credential.user.updateProfile(displayName: user.displayName);
 
         return Services().users().save(user);
@@ -31,7 +37,8 @@ class Auth {
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
 
     // Create a new credential
     final GoogleAuthCredential credential = GoogleAuthProvider.credential(
@@ -52,5 +59,9 @@ class Auth {
             context, "/dashboard", (route) => false);
       }
     });
+  }
+
+  static User getUserCredentials() {
+    return _auth.currentUser;
   }
 }
