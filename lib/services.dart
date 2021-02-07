@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'models.dart' ;
+import 'models.dart';
 
 class Keys {
   static const String EDUCATIONS = 'educations';
@@ -14,13 +14,30 @@ class Repository<T extends Model> {
   final CollectionReference _collection;
   final Reviver<T> _revive;
 
-  Repository._(CollectionReference collection, {Reviver<T> revive}) : _collection = collection, _revive = revive;
+  Repository._(CollectionReference collection, {Reviver<T> revive})
+      : _collection = collection,
+        _revive = revive;
 
-  Future<Iterable<T>> all() { return _collection.get().then((query) => query.docs.map((doc) => _revive(doc.data())).toList()); }
+  Future<Iterable<T>> all() {
+    return _collection
+        .get()
+        .then((query) => query.docs.map((doc) => _revive(doc.data())).toList());
+  }
 
-  Future<T> get(dynamic id) { return _collection.doc(id).get().then((snapshot) => _revive(snapshot.data())); }
-  Future<T> save(T data) { return _collection.doc(data.identity).set(data.toJson()).then((e) => data); }
-  Future<void> delete (dynamic id) { return _collection.doc(id).delete(); }
+  Future<T> get(dynamic id) {
+    return _collection
+        .doc(id)
+        .get()
+        .then((snapshot) => _revive(snapshot.data()));
+  }
+
+  Future<T> save(T data) {
+    return _collection.doc(data.identity).set(data.toJson()).then((e) => data);
+  }
+
+  Future<void> delete(dynamic id) {
+    return _collection.doc(id).delete();
+  }
 }
 
 class Services {
@@ -30,18 +47,31 @@ class Services {
   Services._();
 
   static Services _instance;
-  factory Services() { return (_instance ??= Services._()); }
+  factory Services() {
+    return (_instance ??= Services._());
+  }
 
   Future<bool> initialize() {
     return Firebase.initializeApp().then((app) {
-      if (app != null) { return ((_store = FirebaseFirestore.instance) != null); }
+      if (app != null) {
+        return ((_store = FirebaseFirestore.instance) != null);
+      }
 
       return false;
     });
   }
 
-  CollectionReference _get(dynamic key) { return _collections.putIfAbsent(key, () => _store.collection(key)); }
+  CollectionReference get(dynamic key) {
+    return _collections.putIfAbsent(key, () => _store.collection(key));
+  }
 
-  Repository<Education> educations() { return Repository._(this._get(Keys.EDUCATIONS), revive: (data) => Education.fromJson(data)); }
-  Repository<User> users() { return Repository._(this._get(Keys.USERS), revive: (data) => User.fromJson(data)); }
+  Repository<Education> educations() {
+    return Repository._(this.get(Keys.EDUCATIONS),
+        revive: (data) => Education.fromJson(data));
+  }
+
+  Repository<IUser> users() {
+    return Repository._(this.get(Keys.USERS),
+        revive: (data) => IUser.fromJson(data));
+  }
 }

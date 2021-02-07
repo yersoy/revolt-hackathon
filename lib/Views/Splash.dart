@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revolt/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Splash extends StatefulWidget {
   Splash({Key key}) : super(key: key);
@@ -10,10 +11,12 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   Future<dynamic> loadingFuture;
+  String redirectString;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     loadingFuture = Utils.loadingFuture();
   }
 
@@ -26,7 +29,7 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<bool>(
+      body: FutureBuilder<dynamic>(
         future: loadingFuture,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -40,8 +43,13 @@ class _SplashState extends State<Splash> {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            WidgetsBinding.instance.addPostFrameCallback(
-                (_) => Navigator.pushReplacementNamed(context, '/welcome'));
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (FirebaseAuth.instance.currentUser != null) {
+                Navigator.pushReplacementNamed(context, '/dashboard');
+              } else {
+                Navigator.pushReplacementNamed(context, '/welcome');
+              }
+            });
           }
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
