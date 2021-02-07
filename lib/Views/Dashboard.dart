@@ -11,7 +11,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  bool teacher;
+  bool teacher = true;
   @override
   void initState() {
     // TODO: implement initState
