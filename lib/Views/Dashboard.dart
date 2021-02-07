@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:revolt/Views/StudentHome.dart';
+import 'package:revolt/Views/TeacherHome.dart';
 import 'package:revolt/services.dart';
 
 class Dashboard extends StatefulWidget {
@@ -26,7 +28,7 @@ class _DashboardState extends State<Dashboard> {
           width: 50,
         ),
       ),
-      body: ListView(),
+      body: teacher ? TeacherHome() : StudentHome(),
     );
   }
 }
