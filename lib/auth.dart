@@ -21,19 +21,20 @@ class Auth {
 
   static Future registerWithEmail(IUser myUser, context) async {
     try {
-      var myauth = await _auth.createUserWithEmailAndPassword(
-          email: myUser.email, password: myUser.password);
-
-      if (_auth.currentUser != null) {
+      await _auth
+          .createUserWithEmailAndPassword(
+              email: myUser.email, password: myUser.password)
+          .then((value) {
         _firebaseMessaging.getToken().then((token) {
           myUser.token = token;
-          myUser.id = myauth.user.uid;
-          myauth.user.updateProfile(displayName: myUser.userName);
-          // firestore.collection('newusers').doc(myUser.email).set(myUser.asMap());
+          myUser.id = value.user.uid;
+          value.user.updateProfile(displayName: myUser.userName);
+
+          Services().users().save(myUser);
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/dashboard", (route) => false);
         });
-        Services().users().save(myUser);
-        Navigator.pushReplacementNamed(context, '/dashboard');
-      }
+      });
     } on FirebaseAuthException catch (e) {
       Future.delayed(Duration.zero, () {
         if (e.code == 'invalid-email') {
@@ -54,7 +55,7 @@ class Auth {
     }
   }
 
-  static Future<UserCredential> signInWithGoogle(context) async {
+  static Future<UserCredential> signInWithGoogle(context, IUser user) async {
     // Trigger the authentication flow
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
@@ -77,7 +78,8 @@ class Auth {
           _auth.currentUser.updateProfile(displayName: _iuser.userName);
         });
         Services().users().save(_iuser);
-        Navigator.pushReplacementNamed(context, '/dashboard');
+        Navigator.pushNamedAndRemoveUntil(
+            context, "/dashboard", (route) => false);
       }
     });
   }

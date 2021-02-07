@@ -20,7 +20,11 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+        title: Image.asset(
+          'assets/images/logo.png',
+          fit: BoxFit.cover,
+          width: 50,
+        ),
       ),
       body: ListView(),
     );

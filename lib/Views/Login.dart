@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 /// __________________ mY imports _______________________
 import 'package:revolt/auth.dart';
+import 'package:revolt/models.dart';
 import '../theme.dart';
 
 class Login extends StatefulWidget {
@@ -173,7 +174,7 @@ class _LoginState extends State<Login> {
                                           child: MaterialButton(
 
                                               onPressed: () async {
-                                            await  Auth.signInWithGoogle(context);
+                                            await  Auth.signInWithGoogle(context,new IUser());
                                               },
                                               child: Image.asset(
                                                 "assets/images/google_search.png",

@@ -49,7 +49,8 @@ class _SplashState extends State<Splash> {
           if (snapshot.connectionState == ConnectionState.done) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (FirebaseAuth.instance.currentUser != null) {
-                Navigator.pushReplacementNamed(context, '/dashboard');
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/dashboard", (route) => false);
               } else {
                 Navigator.pushReplacementNamed(context, '/welcome');
               }
