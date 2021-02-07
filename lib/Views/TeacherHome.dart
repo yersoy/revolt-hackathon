@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
+import 'package:revolt/services.dart';
 import 'package:revolt/utils.dart';
+import 'ClassDetail.dart';
+import 'NewClass.dart';
 
 class TeacherHome extends StatefulWidget {
   TeacherHome({Key key}) : super(key: key);
@@ -24,6 +29,17 @@ class _TeacherHomeState extends State<TeacherHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewClass(),
+            ),
+          );
+        },
+        child: Icon(FontAwesomeIcons.plus),
+      ),
       body: ListView(
         children: [
           Container(
@@ -32,12 +48,15 @@ class _TeacherHomeState extends State<TeacherHome> {
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: FutureBuilder<Position>(
-                    future: Utils.determinePosition(),
+                  child: FutureBuilder(
+                    future: Future.wait([
+                      Utils.determinePosition(),
+                      Services().get("lessons").get()
+                    ]),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
-                        LatLng mylocation = LatLng(
-                            snapshot.data.latitude, snapshot.data.longitude);
+                        LatLng mylocation = LatLng(snapshot.data[0].latitude,
+                            snapshot.data[0].longitude);
                         var markers = [
                           Marker(
                             width: 40.0,
@@ -50,7 +69,6 @@ class _TeacherHomeState extends State<TeacherHome> {
                             ),
                           ),
                         ];
-
                         return FlutterMap(
                           options: MapOptions(
                             center: mylocation,
@@ -87,6 +105,51 @@ class _TeacherHomeState extends State<TeacherHome> {
                         );
                       }
                       return Card();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  trailing: Icon(FontAwesomeIcons.graduationCap),
+                  title: Text("Ders Sınıfı İstekleri"),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 300,
+                  child: FutureBuilder<QuerySnapshot>(
+                    future: Services().get("lessons").get(),
+                    builder: (context, snapshot) {
+                      var data = snapshot.data.docs;
+                      if (snapshot.data.docs.length > 0) {
+                        return ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (context, index) => ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ClassDetail(
+                                    classid: data.elementAt(index)["id"],
+                                  ),
+                                ),
+                              );
+                            },
+                            title: Text(data.elementAt(index)["lecture"]),
+                            trailing: Text(
+                                data.elementAt(index)["duration"].toString() +
+                                    " DK"),
+                            subtitle: Text(data.elementAt(index)["subject"]),
+                          ),
+                        );
+                      }
+                      return Center(
+                        child: Text("Yakınlarda Ders Bulunamadı"),
+                      );
                     },
                   ),
                 ),

@@ -25,7 +25,7 @@ class Utils {
     ));
   }
 
-  static Future<Position> determinePosition() async {
+  static Future determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
