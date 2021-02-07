@@ -136,7 +136,7 @@ class Lesson extends Model {
     startDate: Convert.to<DateTime>(json['startDate']),
     duration: Convert.to<int>(json['duration']),
 
-    participants: json['participants']?.map((json) => Participant.fromJson(json)),
+    participants: json['participants']?.map<Participant>((json) => Participant.fromJson(json))?.toList(),
   );
   
   @override

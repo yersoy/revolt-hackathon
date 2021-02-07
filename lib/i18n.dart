@@ -18,7 +18,7 @@ class GlobalCustomLocalizations {
 
   static final Map<String, Map<String, String>> _strings = {
     Locales.TR: {
-      'app.title': 'Revolt',
+      'app.title': 'Revolt Hackathon',
 
       'app.add': 'Ekle',
       'app.added': 'Eklendi',
@@ -77,7 +77,7 @@ class GlobalCustomLocalizations {
       'home.title': 'Revolt',
     },
     Locales.EN: {
-      'app.title': 'Revolt',
+      'app.title': 'Revolt Hackathon',
 
       'app.add': 'Add',
       'app.added': 'Added',

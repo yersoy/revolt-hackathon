@@ -13,4 +13,5 @@ class Routes {
   static String DASHBOARD = '/dashboard';
   static String SEARCH = '/search';
   static String CLASSROOM = '/classroom';
+  static String LESSON = '/lesson';
 }

@@ -8,6 +8,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../constants.dart';
 import '../../models.dart';
 import '../../services.dart';
 import '../../utils.dart';
@@ -24,6 +25,7 @@ class Teacher extends StatefulWidget {
 
 class _TeacherState extends State<Teacher> {
   Position _position;
+  Iterable<Education> _educations;
 
   Marker _markerItem(LatLng location) {
     return Marker(
@@ -34,6 +36,12 @@ class _TeacherState extends State<Teacher> {
         child: Image.asset('assets/images/location-pin.png'),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Services().educations().all().then((value) => _educations = value);
   }
 
   @override
@@ -108,49 +116,42 @@ class _TeacherState extends State<Teacher> {
               Container(
                 width: double.infinity,
                 height: 300,
-                child: FutureBuilder<QuerySnapshot>(
-                  future: Services().get("lessons").get(),
+                child: FutureBuilder<Iterable<Lesson>>(
+                  future: Services().lessons().all(),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      var data = snapshot.data.docs;
-                      if (snapshot.data.docs.length > 0) {
+                    print(snapshot.error.toString());
+                    if (snapshot.hasData) {
+                      var data = snapshot.data;
+                      print(data.length);
+                      if (data.length > 0) {
                         return ListView.builder(
                             itemCount: data.length,
                             itemBuilder: (context, index) {
+                              Lesson _lesson = data.elementAt(index);
                               return ListTile(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Details(
-                                        classid: data.elementAt(index)["id"],
-                                      ),
-                                    ),
-                                  );
+                                  Navigator.pushNamed(context, Routes.LESSON,arguments: _lesson);
                                 },
-                                title:
-                                    Text(data.elementAt(index)["lessonName"]),
-                                trailing: Text(data
-                                        .elementAt(index)["lessonDuration"]
-                                        .toString() +
-                                    " DK"),
-                                subtitle:
-                                    Text(data.elementAt(index)["lessonType"]),
+                                title: Text(_lesson.title),
+                                trailing:
+                                    Text(_lesson.duration.toString() + " DK"),
+                                subtitle: Text(_educations
+                                    .firstWhere((element) =>
+                                        element.id == _lesson.educationId)
+                                    .name),
                               );
                             });
                       }
-                      return Center(
-                        child: Text("Yakınlarda Ders Bulunamadı"),
-                      );
                     }
-                    return Container(
-                      width: double.infinity,
-                      height: 200,
-                      child: FlareActor(
-                        "assets/flare/logo.flr",
-                        alignment: Alignment.center,
-                        fit: BoxFit.contain,
-                        animation: "idle",
+                    return Center(
+                      child: Container(
+                        width: 100,
+                        child: FlareActor(
+                          "assets/flare/logo.flr",
+                          alignment: Alignment.center,
+                          fit: BoxFit.contain,
+                          animation: "idle",
+                        ),
                       ),
                     );
                   },

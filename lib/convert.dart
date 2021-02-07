@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 typedef Reviver<T> = T Function(dynamic value);
 
 class Convert {
@@ -6,7 +8,7 @@ class Convert {
     double: (value) { return _trust(value, (o) => double.parse(o.toString(), (e) => double.nan)); },
     int: (value) { return _trust(value, (o) => int.parse(o.toString()), 0); },
 
-    DateTime: (value) { return _trust(value, (o) => (o is num ? DateTime.fromMillisecondsSinceEpoch(o) : DateTime.parse(o.toString()))); },
+    DateTime: (value) { return _trust(value, (o) => (o is num ? DateTime.fromMillisecondsSinceEpoch(o) : (o is Timestamp ? o.toDate() : DateTime.parse(o.toString())))); },
     String: (value) { return _trust(value, (o) => o.toString()); },
   };
 

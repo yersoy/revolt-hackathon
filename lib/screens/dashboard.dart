@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:revolt/Auth.dart';
@@ -43,13 +44,15 @@ class _DashboardState extends State<Dashboard> {
         ),
         actions: <Widget>[
           IconButton(
-            color: button.colorScheme.primaryVariant,
-            icon: Icon(Icons.search),
-            onPressed: () {},
+            color: button.colorScheme.primary,
+            icon: Icon(FontAwesomeIcons.plus),
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.CLASSROOM);
+            },
           ),
           IconButton(
             color: button.colorScheme.primary,
-            icon: Icon(Icons.notifications),
+            icon: Icon(FontAwesomeIcons.cog),
             onPressed: () {},
           ),
         ],
@@ -64,7 +67,17 @@ class _DashboardState extends State<Dashboard> {
               return Student();
             }
           }
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: Container(
+              width: 150,
+              child: FlareActor(
+                "assets/flare/logo.flr",
+                alignment: Alignment.center,
+                fit: BoxFit.contain,
+                animation: "idle",
+              ),
+            ),
+          );
         },
       ),
       floatingActionButton: (_teacher

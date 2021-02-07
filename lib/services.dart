@@ -12,7 +12,7 @@ class Repository<T extends Model> {
 
   Repository._(CollectionReference collection, {Reviver<T> revive}) : _collection = collection, _revive = revive;
 
-  Future<Iterable<T>> all() { return _collection.get().then((query) => query.docs.map((doc) => _revive(doc.data())).toList()); }
+  Future<Iterable<T>> all() { return _collection.get().then((query) => query.docs.map((doc) { print(doc.data()); return _revive(doc.data());}).toList()); }
 
   Future<T> get(dynamic id) { return _collection.doc(id).get().then((snapshot) => _revive(snapshot.data())); }
   Future<T> save(T model) { final data = model.toJson(), document = _collection.doc(data['id']); return document.set(data..update('id', (id) => document.id)).then((e) => _revive(data)); }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:revolt/screens/classroom/details.dart';
 
 import 'i18n.dart';
 import 'constants.dart';
@@ -23,10 +23,12 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Revolt Hackathon', debugShowCheckedModeBanner: false,
+    return MaterialApp(
+      title: 'Revolt Hackathon',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
-          primaryColor: Colors.indigo,
-          accentColor: Colors.indigoAccent,
+        primaryColor: Colors.indigo,
+        accentColor: Colors.indigoAccent,
       ),
       darkTheme: ThemeData.dark().copyWith(
         primaryColor: Colors.red,
@@ -38,13 +40,13 @@ class MyApp extends StatelessWidget {
         Routes.ENTRANCE: (context) => Entrance(),
         Routes.SIGNUP: (context) => Signup(),
         Routes.SIGNIN: (context) => Signin(),
-
         Routes.DASHBOARD: (context) => Dashboard(),
         Routes.CLASSROOM: (context) => Classroom(),
         Routes.SEARCH: (context) => Search(),
+        Routes.LESSON: (context) =>
+            Details(ModalRoute.of(context).settings.arguments),
       },
       initialRoute: Routes.SPLASH,
-
       localizationsDelegates: [
         GlobalCustomLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
