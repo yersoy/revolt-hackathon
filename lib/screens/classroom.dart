@@ -42,7 +42,7 @@ class _ClassroomState extends State<Classroom> {
       height: 40.0,
       point: location,
       builder: (context) => Container(
-        child: Image.asset('assets/images/location-pin.png'),
+        child: Icon(FontAwesomeIcons.mapMarker),
       ),
     );
   }
@@ -293,15 +293,20 @@ class _ClassroomState extends State<Classroom> {
                   title: FutureBuilder(
                     future: Utils.determinePosition(),
                     builder: (context, snapshot) {
-                      Position myloc = snapshot.data;
-                      _lesson.location =
-                          new GeoPoint(myloc.latitude, myloc.longitude);
-                      return FutureBuilder<String>(
-                        future: Utils.getAdressbyCoordinats(myloc),
-                        builder: (context, snapshott) {
-                          return Text(snapshott.data);
-                        },
-                      );
+                      if (snapshot.hasData) {
+                        Position myloc = snapshot.data;
+                        _lesson.location =
+                            new GeoPoint(myloc.latitude, myloc.longitude);
+
+                        return FutureBuilder<String>(
+                          future: Utils.getAdressbyCoordinats(myloc),
+                          builder: (context, snapshott) {
+                            if (snapshott.hasData) return Text(snapshott.data);
+                            return Text("Yükleniyor..");
+                          },
+                        );
+                      }
+                      return Text("Yükleniyor..");
                     },
                   ),
                 ),

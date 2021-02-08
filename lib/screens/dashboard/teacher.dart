@@ -28,12 +28,29 @@ class _TeacherState extends State<Teacher> {
   Iterable<Education> _educations;
 
   Marker _markerItem(Lesson _lesson) {
+    Map<String, Color> eduColor = {
+      "38tgXMl16Ul2VPxn4uvb": Colors.blue,
+      "Ssp5LWwwIycMr3OYg1fV": Colors.red
+    };
+    Map<String, String> eduText = {
+      "38tgXMl16Ul2VPxn4uvb": "Fizik",
+      "Ssp5LWwwIycMr3OYg1fV": "Mat"
+    };
     return Marker(
-      width: 40.0,
-      height: 40.0,
+      width: 51.0,
+      height: 51.0,
       point: LatLng(_lesson.location.latitude, _lesson.location.longitude),
       builder: (context) => Container(
-        child: Image.asset('assets/images/location-pin.png'),
+        child: Column(
+          children: [
+            Text(eduText[_lesson.educationId]),
+            Icon(
+              FontAwesomeIcons.mapMarkerAlt,
+              color: eduColor[_lesson.educationId],
+              size: 35,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -117,7 +134,7 @@ class _TeacherState extends State<Teacher> {
             children: [
               ListTile(
                 trailing: Icon(FontAwesomeIcons.graduationCap),
-                title: Text("Oluşturulan Dersler"),
+                title: Text("Yakınlardaki Dersler"),
               ),
               Container(
                 width: double.infinity,
