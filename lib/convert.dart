@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:revolt/models.dart';
 
 typedef Reviver<T> = T Function(dynamic value);
 
@@ -10,6 +11,9 @@ class Convert {
 
     DateTime: (value) { return _trust(value, (o) => (o is num ? DateTime.fromMillisecondsSinceEpoch(o) : (o is Timestamp ? o.toDate() : DateTime.parse(o.toString())))); },
     String: (value) { return _trust(value, (o) => o.toString()); },
+    Location: (value) { return _trust(value, (o) => o.toString()); },
+    GeoPoint: (value) { return _trust(value, (o) => o.toString()); },
+
   };
 
   static dynamic _trust<T>(dynamic value, Reviver<T> action, [T fallback]) { return ((value ??= fallback) is T ? value : (value == null ? null : action(value))); }

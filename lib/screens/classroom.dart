@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
@@ -293,15 +294,13 @@ class _ClassroomState extends State<Classroom> {
                     future: Utils.determinePosition(),
                     builder: (context, snapshot) {
                       Position myloc = snapshot.data;
-                      _lesson.location = Location(
-                          latitude: myloc.latitude, longitude: myloc.longitude);
-                      return TextFormField(
-                        initialValue: snapshot.data.toString(),
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: 'Ders Konumu Seç',
-                          border: InputBorder.none,
-                        ),
+                      _lesson.location =
+                          new GeoPoint(myloc.latitude, myloc.longitude);
+                      return FutureBuilder<String>(
+                        future: Utils.getAdressbyCoordinats(myloc),
+                        builder: (context, snapshott) {
+                          return Text(snapshott.data);
+                        },
                       );
                     },
                   ),

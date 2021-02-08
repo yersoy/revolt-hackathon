@@ -27,11 +27,11 @@ class _TeacherState extends State<Teacher> {
   Position _position;
   Iterable<Education> _educations;
 
-  Marker _markerItem(LatLng location) {
+  Marker _markerItem(Lesson _lesson) {
     return Marker(
       width: 40.0,
       height: 40.0,
-      point: location,
+      point: LatLng(_lesson.location.latitude, _lesson.location.longitude),
       builder: (context) => Container(
         child: Image.asset('assets/images/location-pin.png'),
       ),
@@ -57,13 +57,19 @@ class _TeacherState extends State<Teacher> {
                 child: FutureBuilder(
                   future: Future.wait([
                     Utils.determinePosition(),
-                    Services().get("lessons").get()
+                    Services().lessons().all().then((value) {
+                      List<Marker> mymarkers = new List<Marker>();
+                      value.forEach((element) {
+                        mymarkers.add(_markerItem(element));
+                      });
+                      return mymarkers;
+                    })
                   ]),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       LatLng mylocation = LatLng(snapshot.data[0].latitude,
                           snapshot.data[0].longitude);
-                      List<Marker> markers = [_markerItem(mylocation)];
+
                       return FlutterMap(
                         options: MapOptions(
                           center: mylocation,
@@ -79,7 +85,7 @@ class _TeacherState extends State<Teacher> {
                             fitBoundsOptions: FitBoundsOptions(
                               padding: EdgeInsets.all(50),
                             ),
-                            markers: markers,
+                            markers: snapshot.data[1],
                             polygonOptions: PolygonOptions(
                                 borderColor: Colors.blueAccent,
                                 color: Colors.black12,
@@ -95,7 +101,7 @@ class _TeacherState extends State<Teacher> {
                               urlTemplate:
                                   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                               subdomains: ['a', 'b', 'c']),
-                          MarkerLayerOptions(markers: markers),
+                          MarkerLayerOptions(markers: snapshot.data[1]),
                         ],
                       );
                     }

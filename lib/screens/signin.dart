@@ -27,7 +27,7 @@ class _SigninState extends State<Signin> {
 
     Auth.login(_credentials.username, _credentials.password).then((user) {
       Navigator.pop(context);
-      if (user is AppUser) { Navigator.pushNamedAndRemoveUntil(context, Routes.DASHBOARD, (route) => true); } else {
+      if (user.user.uid!=null) { Navigator.pushReplacementNamed(context, Routes.DASHBOARD); } else {
         this.scaffold.showSnackBar(SnackBar(content: Text(resources.SIGNIN_INVALID)));
       }
     });

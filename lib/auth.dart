@@ -9,12 +9,9 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseMessaging _messaging = new FirebaseMessaging();
 
 class Auth {
-  static Future<AppUser> login(String email, String password) {
-    _auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .then((value) {
-      if (value.user.uid.isNotEmpty) {}
-    });
+  static Future<UserCredential> login(String email, String password) async {
+    return await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
   }
 
   static Future<AppUser> registerWithEmail(AppUser user) {

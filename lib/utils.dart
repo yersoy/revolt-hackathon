@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:revolt/services.dart';
+import 'package:geocoder/geocoder.dart';
+import 'models.dart';
 
 class Utils {
   static Future loadingFuture() async {
@@ -50,5 +52,13 @@ class Utils {
     }
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  static Future<String> getAdressbyCoordinats(Position mylocation) async {
+    final coordinates =
+        new Coordinates(mylocation.latitude, mylocation.longitude);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    return addresses.first.addressLine;
   }
 }

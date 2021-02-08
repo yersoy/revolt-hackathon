@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:latlong/latlong.dart';
 
 import 'convert.dart';
@@ -133,7 +134,7 @@ class Lesson extends Model {
   DateTime startDate;
   int duration;
   String link;
-  Location location;
+  GeoPoint location;
 
   final List<Participant> participants = List();
 
