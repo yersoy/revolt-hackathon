@@ -132,20 +132,13 @@ class _StudentState extends State<Student> {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 18.0),
-                      child: Text('Öğrenebileceğiniz konular'),
-                    ),
-                    IconButton(
-                        icon: Icon(
-                          Icons.sort,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        onPressed: () {})
-                  ],
+                ListTile(
+                  trailing: IconButton(
+                      icon: Icon(
+                        Icons.sort,
+                      ),
+                      onPressed: () {}),
+                  title: Text("Yakınlardaki Dersler"),
                 ),
                 FutureBuilder<Iterable<Lesson>>(
                   future: Services().lessons().all(),

@@ -43,13 +43,14 @@ class _DashboardState extends State<Dashboard> {
           child: Image.asset('assets/images/logo.png'),
         ),
         actions: <Widget>[
-          IconButton(
-            color: button.colorScheme.primary,
-            icon: Icon(FontAwesomeIcons.plus),
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.CLASSROOM);
-            },
-          ),
+          if (_teacher)
+            IconButton(
+              color: button.colorScheme.primary,
+              icon: Icon(FontAwesomeIcons.plus),
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.CLASSROOM);
+              },
+            ),
           IconButton(
             color: button.colorScheme.primary,
             icon: Icon(FontAwesomeIcons.cog),
