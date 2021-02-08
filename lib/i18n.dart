@@ -115,14 +115,14 @@ class GlobalCustomLocalizations {
       'app.themes.black': 'Black',
 
       'welcome.one.title': 'Hello',
-      'welcome.one.description': 'Bildiklerini öğretebilir veya merak ettiğin konularda eğitim alabilirsin',
+      'welcome.one.description': 'You can teach what you know or study topics you are curious about',
       'welcome.two.title': 'Learn and teach',
-      'welcome.two.description': 'Bilgi paylaştıkça çoğalır',
-      'welcome.three.title': 'Öğrenmenin yaşı yoktur',
-      'welcome.three.description': 'Hazırsan seni tanıyarak başlayalım',
+      'welcome.two.description': 'Knowledge multiplies as it is shared',
+      'welcome.three.title': 'There is no age to learn',
+      'welcome.three.description': "If you are ready, let's start by getting to know you",
 
       'entrance.title': 'Join us',
-      'entrance.description': 'Bu sayede ilgilendiğin konularda eğitim alabilir, bilgini paylaşarak geleceği aydınlatabilirsin',
+      'entrance.description': 'In this way, you can get education on the subjects you are interested in and enlighten the future by sharing your knowledge.',
       'entrance.signup': 'Sign Up',
       'entrance.signin': 'Sign In',
 
