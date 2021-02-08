@@ -136,50 +136,47 @@ class _TeacherState extends State<Teacher> {
                 trailing: Icon(FontAwesomeIcons.graduationCap),
                 title: Text("Yakınlardaki Dersler"),
               ),
-              Container(
-                width: double.infinity,
-                height: 300,
-                child: FutureBuilder<Iterable<Lesson>>(
-                  future: Services().lessons().all(),
-                  builder: (context, snapshot) {
-                    print(snapshot.error.toString());
-                    if (snapshot.hasData) {
-                      var data = snapshot.data;
-                      print(data.length);
-                      if (data.length > 0) {
-                        return ListView.builder(
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              Lesson _lesson = data.elementAt(index);
-                              return ListTile(
-                                onTap: () {
-                                  Navigator.pushNamed(context, Routes.LESSON,
-                                      arguments: _lesson);
-                                },
-                                title: Text(_lesson.title),
-                                trailing:
-                                    Text(_lesson.duration.toString() + " DK"),
-                                subtitle: Text(_educations
-                                    .firstWhere((element) =>
-                                        element.id == _lesson.educationId)
-                                    .name),
-                              );
-                            });
-                      }
+              FutureBuilder<Iterable<Lesson>>(
+                future: Services().lessons().all(),
+                builder: (context, snapshot) {
+                  print(snapshot.error.toString());
+                  if (snapshot.hasData) {
+                    var data = snapshot.data;
+                    print(data.length);
+                    if (data.length > 0) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            Lesson _lesson = data.elementAt(index);
+                            return ListTile(
+                              onTap: () {
+                                Navigator.pushNamed(context, Routes.LESSON,
+                                    arguments: _lesson);
+                              },
+                              title: Text(_lesson.title),
+                              trailing:
+                                  Text(_lesson.duration.toString() + " DK"),
+                              subtitle: Text(_educations
+                                  .firstWhere((element) =>
+                                      element.id == _lesson.educationId)
+                                  .name),
+                            );
+                          });
                     }
-                    return Center(
-                      child: Container(
-                        width: 100,
-                        child: FlareActor(
-                          "assets/flare/logo.flr",
-                          alignment: Alignment.center,
-                          fit: BoxFit.contain,
-                          animation: "idle",
-                        ),
+                  }
+                  return Center(
+                    child: Container(
+                      width: 100,
+                      child: FlareActor(
+                        "assets/flare/logo.flr",
+                        alignment: Alignment.center,
+                        fit: BoxFit.contain,
+                        animation: "idle",
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ],
           ),

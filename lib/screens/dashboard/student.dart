@@ -1,10 +1,14 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 
+import '../../constants.dart';
+import '../../services.dart';
 import '../../utils.dart';
 import '../../models.dart';
 
@@ -16,176 +20,180 @@ class Student extends StatefulWidget {
 }
 
 class _StudentState extends State<Student> {
-  List<Education>  _educations = List();
   Position _position;
+  Iterable<Education> _educations;
 
-  Widget _subjects() {
-    return SliverList(
-      delegate: SliverChildListDelegate(
-        [
-          Container(
-            width: double.infinity,
-            height: 250,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: FutureBuilder<Position>(
-                    future: Utils.determinePosition(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        LatLng mylocation = LatLng(
-                            snapshot.data.latitude, snapshot.data.longitude);
-                        var markers = [
-                          Marker(
-                            width: 40.0,
-                            height: 40.0,
-                            point: mylocation,
-                            builder: (ctx) => Container(
-                              child: Image.asset(
-                                "assets/images/location-pin.png",
-                              ),
-                            ),
-                          ),
-                        ];
-
-                        return FlutterMap(
-                          options: MapOptions(
-                            center: mylocation,
-                            zoom: 13.0,
-                            plugins: [
-                              MarkerClusterPlugin(),
-                            ],
-                          ),
-                          layers: [
-                            MarkerClusterLayerOptions(
-                              maxClusterRadius: 120,
-                              size: Size(40, 40),
-                              fitBoundsOptions: FitBoundsOptions(
-                                padding: EdgeInsets.all(50),
-                              ),
-                              markers: markers,
-                              polygonOptions: PolygonOptions(
-                                  borderColor: Colors.blueAccent,
-                                  color: Colors.black12,
-                                  borderStrokeWidth: 3),
-                              builder: (context, markers) {
-                                return FloatingActionButton(
-                                  child: Text(markers.length.toString()),
-                                  onPressed: null,
-                                );
-                              },
-                            ),
-                            TileLayerOptions(
-                                urlTemplate:
-                                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                subdomains: ['a', 'b', 'c']),
-                            MarkerLayerOptions(markers: markers),
-                          ],
-                        );
-                      }
-                      return Card();
-                    },
-                  ),
-                ),
-              ],
+  Marker _markerItem(Lesson _lesson) {
+    Map<String, Color> eduColor = {
+      "38tgXMl16Ul2VPxn4uvb": Colors.blue,
+      "Ssp5LWwwIycMr3OYg1fV": Colors.red
+    };
+    Map<String, String> eduText = {
+      "38tgXMl16Ul2VPxn4uvb": "Fizik",
+      "Ssp5LWwwIycMr3OYg1fV": "Mat"
+    };
+    return Marker(
+      width: 51.0,
+      height: 51.0,
+      point: LatLng(_lesson.location.latitude, _lesson.location.longitude),
+      builder: (context) => Container(
+        child: Column(
+          children: [
+            Text(eduText[_lesson.educationId]),
+            Icon(
+              FontAwesomeIcons.mapMarkerAlt,
+              color: eduColor[_lesson.educationId],
+              size: 35,
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left:18.0),
-                child: Text('Öğrenebileceğiniz konular'),
-              ),
-              IconButton(
-                  icon: Icon(
-                    Icons.sort,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  onPressed: () {
-
-                  })
-
-            ],
-          ),
-          Column(
-              children: _educations.map((x) {
-                return _subjectsTile(x);
-              }).toList()),
-
-        ],
-      ),
-    );
-  }
-
-  Widget _subjectsTile(Education model) {
-    final theme = Theme.of(context), text = theme.textTheme;
-
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            offset: Offset(4, 4),
-            blurRadius: 10,
-            color: Colors.black12,
-          ),
-          BoxShadow(
-            offset: Offset(-3, 0),
-            blurRadius: 15,
-            color: Colors.black12,
-          )
-        ],
-      ),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-        child: ListTile(
-          contentPadding: EdgeInsets.all(0),
-          // leading: ClipRRect(
-          //   borderRadius: BorderRadius.all(Radius.circular(13)),
-          //   child: Container(
-          //     height: 45,
-          //     width: 45,
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(15),
-          //       color: Colors.transparent,
-          //     ),
-          //     child: Image.asset(
-          //       model.image,
-          //       height: 15,
-          //       width: 30,
-          //       fit: BoxFit.fitHeight,
-          //     ),
-          //   ),
-          // ),
-          title: Text(model.name, style: text.headline3),
-          // subtitle: Text(model.usage,
-          //   style: TextStyles.titleMedium,
-          // ),
-          trailing: Icon(
-            Icons.keyboard_arrow_right,
-            size: 30,
-            color: Theme.of(context).primaryColor,
-          ),
+          ],
         ),
       ),
     );
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Services().educations().all().then((value) => _educations = value);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
       body: CustomScrollView(
         slivers: <Widget>[
-          _subjects(),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Container(
+                  width: double.infinity,
+                  height: 250,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: FutureBuilder(
+                          future: Future.wait([
+                            Utils.determinePosition(),
+                            Services().lessons().all().then((value) {
+                              List<Marker> mymarkers = new List<Marker>();
+                              value.forEach((element) {
+                                mymarkers.add(_markerItem(element));
+                              });
+                              return mymarkers;
+                            })
+                          ]),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              LatLng mylocation = LatLng(
+                                  snapshot.data[0].latitude,
+                                  snapshot.data[0].longitude);
+
+                              return FlutterMap(
+                                options: MapOptions(
+                                  center: mylocation,
+                                  zoom: 13.0,
+                                  plugins: [
+                                    MarkerClusterPlugin(),
+                                  ],
+                                ),
+                                layers: [
+                                  MarkerClusterLayerOptions(
+                                    maxClusterRadius: 120,
+                                    size: Size(40, 40),
+                                    fitBoundsOptions: FitBoundsOptions(
+                                      padding: EdgeInsets.all(50),
+                                    ),
+                                    markers: snapshot.data[1],
+                                    polygonOptions: PolygonOptions(
+                                        borderColor: Colors.blueAccent,
+                                        color: Colors.black12,
+                                        borderStrokeWidth: 3),
+                                    builder: (context, markers) {
+                                      return FloatingActionButton(
+                                        child: Text(markers.length.toString()),
+                                        onPressed: null,
+                                      );
+                                    },
+                                  ),
+                                  TileLayerOptions(
+                                      urlTemplate:
+                                          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                      subdomains: ['a', 'b', 'c']),
+                                  MarkerLayerOptions(markers: snapshot.data[1]),
+                                ],
+                              );
+                            }
+                            return Card();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 18.0),
+                      child: Text('Öğrenebileceğiniz konular'),
+                    ),
+                    IconButton(
+                        icon: Icon(
+                          Icons.sort,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        onPressed: () {})
+                  ],
+                ),
+                FutureBuilder<Iterable<Lesson>>(
+                  future: Services().lessons().all(),
+                  builder: (context, snapshot) {
+                    print(snapshot.error.toString());
+                    if (snapshot.hasData) {
+                      var data = snapshot.data;
+                      print(data.length);
+                      if (data.length > 0) {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              Lesson _lesson = data.elementAt(index);
+                              return ListTile(
+                                onTap: () {
+                                  Navigator.pushNamed(context, Routes.LESSON,
+                                      arguments: _lesson);
+                                },
+                                title: Text(_lesson.title),
+                                trailing:
+                                    Text(_lesson.duration.toString() + " DK"),
+                                subtitle: Text(_educations
+                                    .firstWhere((element) =>
+                                        element.id == _lesson.educationId)
+                                    .name),
+                              );
+                            });
+                      }
+                    }
+                    return Center(
+                      child: Container(
+                        width: 100,
+                        child: FlareActor(
+                          "assets/flare/logo.flr",
+                          alignment: Alignment.center,
+                          fit: BoxFit.contain,
+                          animation: "idle",
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 }
-
